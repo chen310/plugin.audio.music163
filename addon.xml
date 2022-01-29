@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.audio.music163" name="music163" version="1.2.0" provider-name="coolapk@IECAS">
+  <requires>
+  <import addon="xbmc.python" version="3.0.0"/>
+  <import addon="script.module.xbmcswift2" version="2.4.0"/>
+	<import addon="script.module.beautifulsoup4" version="4.5.3"/>
+	<import addon="script.module.requests" version="2.19.1"/>
+	<import addon="script.module.html5lib" version="0.999.0"/>
+	<import addon="script.module.future" version="0.16.0"/>
+  <import addon="script.module.qrcode" version="6.1"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.python.module" library="api.py"/>
+  <extension point="xbmc.python.module" library="encrypt.py"/> 
+  
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language></language>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+    <description>网易云音乐是一款专注于发现与分享的音乐产品,依托专业音乐人、DJ、好友推荐及社交功能,为用户打造全新的音乐产品</description>
+  </extension>
+</addon>

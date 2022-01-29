@@ -1,0 +1,37 @@
+name: "upload"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: upload-workflow
+  cancel-in-progress: true
+
+jobs:
+  deploy-to-scf:
+    name: upload
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone local repository
+        uses: actions/checkout@v2
+      - name: Move files
+        run: |
+          mkdir plugin.audio.music163
+          rm -rf .github .git .gitignore public
+          shopt -s extglob
+          sudo mv !(plugin.audio.music163) plugin.audio.music163
+      - name: Upload plugin
+        uses: actions/upload-artifact@v2
+        with:
+          name: plugin.audio.music163-python2
+          path: ./
+      - name: Change python version
+        run: sudo sed -i "s/3\.0\.0/2\.7\.0/g" ./plugin.audio.music163/addon.xml
+      - name: Upload plugin
+        uses: actions/upload-artifact@v2
+        with:
+          name: plugin.audio.music163-python3
+          path: ./

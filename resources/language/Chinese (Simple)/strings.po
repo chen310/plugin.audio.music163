@@ -1,0 +1,215 @@
+msgid ""
+msgstr ""
+
+#Chinese Simplified
+################################
+
+msgctxt "#32001"
+msgid "Login Settings"
+msgstr "登录设置"
+
+msgctxt "#32002"
+msgid "Account Settings"
+msgstr "账号设置"
+
+msgctxt "#32003"
+msgid "Username"
+msgstr "用户名"
+
+msgctxt "#32004"
+msgid "Password"
+msgstr "密码"
+
+msgctxt "#32005"
+msgid "Login"
+msgstr "登录"
+
+##
+
+msgctxt "#32102"
+msgid "Proxy Settings"
+msgstr "代理设置"
+
+msgctxt "#32103"
+msgid "Host"
+msgstr "服务器"
+
+msgctxt "#32104"
+msgid "Port"
+msgstr "端口"
+
+msgctxt "#32105"
+msgid "Enable Proxy"
+msgstr "使用代理"
+
+################################
+
+msgctxt "#33001"
+msgid "Play Settings"
+msgstr "播放设置"
+
+msgctxt "#33002"
+msgid "Play Settings"
+msgstr "播放设置"
+
+msgctxt "#33003"
+msgid "Number of Songs Per Page"
+msgstr "每页歌曲数"
+
+msgctxt "#33004"
+msgid "Show Index of Song"
+msgstr "显示歌曲序号"
+
+msgctxt "#33005"
+msgid "Play MV First"
+msgstr "优先播放MV"
+
+msgctxt "#33006"
+msgid "Default Quality"
+msgstr "播放音质"
+
+msgctxt "#32011"
+msgid "Standard"
+msgstr "标准"
+
+msgctxt "#32012"
+msgid "High"
+msgstr "较高"
+
+msgctxt "#32013"
+msgid "Very High"
+msgstr "极高"
+
+msgctxt "#32014"
+msgid "Lossless"
+msgstr "无损"
+
+
+msgctxt "#33008"
+msgid "Follow Author"
+msgstr "网易云音乐中关注作者"
+
+msgctxt "#33009"
+msgid "Auto Play Mv"
+msgstr "歌曲不能播放时自动播放MV(如有)"
+
+msgctxt "#33010"
+msgid "Hide Songs That Cannot Be Played"
+msgstr "隐藏不能播放的歌曲"
+
+msgctxt "#33011"
+msgid "Hide Cover Songs in Search Reault"
+msgstr "隐藏搜索结果中的翻唱歌曲"
+
+msgctxt "#33012"
+msgid "Show Album Name"
+msgstr "歌名下方显示专辑名"
+
+msgctxt "#33013"
+msgid "Upload Play Record"
+msgstr "上传播放记录至网易云"
+
+################################
+
+msgctxt "#34001"
+msgid "Function Settings"
+msgstr "功能设置"
+
+msgctxt "#34002"
+msgid "Function Switch"
+msgstr "功能开关"
+
+msgctxt "#34003"
+msgid "Ranking List"
+msgstr "排行榜"
+
+msgctxt "#34004"
+msgid "Top Artist"
+msgstr "热门歌手"
+
+msgctxt "#34005"
+msgid "Daily Recommend"
+msgstr "每日推荐"
+
+msgctxt "#34006"
+msgid "Personal FM"
+msgstr "私人FM"
+
+msgctxt "#34007"
+msgid "My Playlist"
+msgstr "我的歌单"
+
+msgctxt "#34008"
+msgid "Recommend Playlists"
+msgstr "推荐歌单"
+
+msgctxt "#34009"
+msgid "Sublist"
+msgstr "我的收藏"
+
+msgctxt "#34010"
+msgid "Search"
+msgstr "搜索"
+
+msgctxt "#34011"
+msgid "Colud Disk"
+msgstr "我的云盘"
+
+msgctxt "#34012"
+msgid "New Albums"
+msgstr "新碟上架"
+
+msgctxt "#34013"
+msgid "New Songs"
+msgstr "新歌速递"
+
+msgctxt "#34014"
+msgid "Home Page"
+msgstr "个人主页"
+
+msgctxt "#34015"
+msgid "Top Mv"
+msgstr "热门MV"
+
+msgctxt "#34016"
+msgid "Mlog"
+msgstr "Mlog"
+
+
+################################
+
+msgctxt "#35001"
+msgid "Tag Settings"
+msgstr "标志设置"
+
+msgctxt "#35002"
+msgid "Tag Switch"
+msgstr "标志开关"
+
+msgctxt "#35003"
+msgid "MV Tag"
+msgstr "MV标志"
+
+msgctxt "#35004"
+msgid "VIP Tag"
+msgstr "VIP标志"
+
+msgctxt "#35005"
+msgid "cloud Tag"
+msgstr "云盘标志"
+
+msgctxt "#35006"
+msgid "Exclusive Tag"
+msgstr "独家标志"
+
+msgctxt "#35007"
+msgid "SQ Tag"
+msgstr "SQ标志"
+
+msgctxt "#35008"
+msgid "Pay Tag"
+msgstr "付费标志"
+
+msgctxt "#35009"
+msgid "PreSell Tag"
+msgstr "预售标志"
