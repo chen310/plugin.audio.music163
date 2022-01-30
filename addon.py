@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from api import NetEase
-from xbmcswift2 import Plugin, xbmcgui, xbmcaddon, xbmcplugin, xbmc, xbmcvfs
+from xbmcswift2 import Plugin, xbmcgui, xbmcplugin, xbmc
 import re
 import sys
 import hashlib
