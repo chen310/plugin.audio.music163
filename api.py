@@ -17,7 +17,7 @@ BASE_URL = "https://music.163.com"
 PROFILE = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
 COOKIE_PATH = os.path.join(PROFILE, 'cookie')
 if not os.path.exists(COOKIE_PATH):
-    with open(COOKIE_PATH, 'w', encoding='utf-8') as f:
+    with open(COOKIE_PATH, 'w') as f:
         f.write('#LWP-Cookies-2.0\n')
 
 
