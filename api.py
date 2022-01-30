@@ -7,7 +7,7 @@ import requests
 from encrypt import encrypted_request
 from xbmcswift2 import xbmc, xbmcaddon, xbmcplugin
 from http.cookiejar import Cookie
-from http.cookiejar import LWPCookieJar
+from http.cookiejar import MozillaCookieJar
 import re
 
 DEFAULT_TIMEOUT = 10
@@ -15,10 +15,10 @@ DEFAULT_TIMEOUT = 10
 BASE_URL = "https://music.163.com"
 
 PROFILE = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
-COOKIE_PATH = os.path.join(PROFILE, 'cookie')
+COOKIE_PATH = os.path.join(PROFILE, 'cookie.txt')
 if not os.path.exists(COOKIE_PATH):
     with open(COOKIE_PATH, 'w') as f:
-        f.write('#LWP-Cookies-2.0\n')
+        f.write('# Netscape HTTP Cookie File\n')
 
 
 class NetEase(object):
@@ -34,7 +34,7 @@ class NetEase(object):
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36",
         }
 
-        cookie_jar = LWPCookieJar(COOKIE_PATH)
+        cookie_jar = MozillaCookieJar(COOKIE_PATH)
         cookie_jar.load()
         self.session = requests.Session()
         self.session.cookies = cookie_jar
