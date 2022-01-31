@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy-to-scf:
+  upload-files:
     name: upload
     runs-on: ubuntu-latest
     steps:
@@ -23,7 +23,7 @@ jobs:
           rm -rf .github .git .gitignore public
           shopt -s extglob
           mv !(plugin.audio.music163) plugin.audio.music163
-      - name: Upload plugin
+      - name: Upload addon
         uses: actions/upload-artifact@v2
         with:
           name: plugin.audio.music163-python3
@@ -31,8 +31,7 @@ jobs:
       - name: Change python version
         run: |
           sed -i "s/3\.0\.0/2\.7\.0/g" ./plugin.audio.music163/addon.xml
-          cat ./plugin.audio.music163/addon.xml
-      - name: Upload plugin
+      - name: Upload addon
         uses: actions/upload-artifact@v2
         with:
           name: plugin.audio.music163-python2
