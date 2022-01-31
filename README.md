@@ -6,3 +6,7 @@
 ![歌单](public/playlist.png)
 ![播放歌曲](public/song.png)
 ![播放MV](public/mv.png)
+
+### 下载
+
+到 Actions 中[下载](https://github.com/chen310/plugin.audio.music163/actions)
