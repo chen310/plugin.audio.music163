@@ -2,10 +2,10 @@
 
 ### 截图
 
-![主页](public/home.png)
-![歌单](public/playlist.png)
-![播放歌曲](public/song.png)
-![播放MV](public/mv.png)
+![主页](https://cdn.jsdelivr.net/gh/chen310/plugin.audio.music163/public/home.png)
+![歌单](https://cdn.jsdelivr.net/gh/chen310/plugin.audio.music163/public/playlist.png)
+![播放歌曲](https://cdn.jsdelivr.net/gh/chen310/plugin.audio.music163/public/song.png)
+![播放MV](https://cdn.jsdelivr.net/gh/chen310/plugin.audio.music163/public/mv.png)
 
 ### 下载
 
