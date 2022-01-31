@@ -60,7 +60,7 @@ if account['logined'] and xbmcplugin.getSetting(int(sys.argv[1]), 'login') == 'f
 #limit = int(xbmcplugin.getSetting(int(sys.argv[1]),'number_of_songs_per_page'))
 limit = xbmcplugin.getSetting(int(sys.argv[1]), 'number_of_songs_per_page')
 if limit == '':
-    limit = 1000
+    limit = 100
 else:
     limit = int(limit)
 

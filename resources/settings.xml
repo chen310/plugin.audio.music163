@@ -13,7 +13,7 @@
     </category>   
 	<category label="33001">
       <setting label="33002" type="lsep"/>
-	  <setting id="number_of_songs_per_page" type="number" label="33003" default="1000"/>
+	  <setting id="number_of_songs_per_page" type="number" label="33003" default="100"/>
 	  <setting id="show_index" type="bool" label="33004" default="true"/>
 	  <setting id="mvfirst" type="bool" label="33005" default="true"/>    
 	  <setting id="quality" type="select" label="33006" lvalues="32011|32012|32013|32014" />	  
