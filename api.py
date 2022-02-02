@@ -317,9 +317,9 @@ class NetEase(object):
         return self.request("POST", path, params)
 
     # 获取MV url
-    def mv_url(self, id):
+    def mv_url(self, id, r=1080):
         path = "/weapi/song/enhance/play/mv/url"
-        params = dict(id=id, r=1080)
+        params = dict(id=id, r=r)
         return self.request("POST", path, params)
 
     # 收藏的歌手

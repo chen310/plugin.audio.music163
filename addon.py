@@ -76,6 +76,18 @@ elif quality == '3':
 else:
     bitrate = 128000
 
+resolution = xbmcplugin.getSetting(int(sys.argv[1]), 'resolution')
+if resolution == '0':
+    r = 240
+elif resolution == '1':
+    r = 480
+elif resolution == '2':
+    r = 720
+elif resolution == '3':
+    r = 1080
+else:
+    r = 720
+
 
 def tag(info, color='red'):
     return '[COLOR ' + color + ']' + info + '[/COLOR]'
@@ -488,7 +500,7 @@ def song_contextmenu(action, meida_type, song_id, mv_id, sourceId, dt):
         else:
             xbmc.executebuiltin('PlayMedia(%s)' % url)
     elif action == 'play_mv':
-        mv = music.mv_url(mv_id).get("data", {})
+        mv = music.mv_url(mv_id, r).get("data", {})
         url = mv['url']
         if url is None:
             dialog = xbmcgui.Dialog()
@@ -501,7 +513,7 @@ def song_contextmenu(action, meida_type, song_id, mv_id, sourceId, dt):
 @plugin.route('/play/<meida_type>/<song_id>/<mv_id>/<sourceId>/<dt>/')
 def play(meida_type, song_id, mv_id, sourceId, dt):
     if meida_type == 'mv':
-        mv = music.mv_url(mv_id).get("data", {})
+        mv = music.mv_url(mv_id, r).get("data", {})
         url = mv['url']
         if url is None:
             dialog = xbmcgui.Dialog()
@@ -525,7 +537,7 @@ def play(meida_type, song_id, mv_id, sourceId, dt):
             xbmc.log('%s - %s' % (song_id, url))
         if url is None:
             if int(mv_id) > 0 and xbmcplugin.getSetting(int(sys.argv[1]), 'auto_play_mv') == 'true':
-                mv = music.mv_url(mv_id).get("data", {})
+                mv = music.mv_url(mv_id, r).get("data", {})
                 url = mv['url']
                 if url is not None:
                     msg = '该歌曲无法播放，自动播放MV'
@@ -554,7 +566,7 @@ def play(meida_type, song_id, mv_id, sourceId, dt):
             dialog.notification(
                 '播放失败', msg, xbmcgui.NOTIFICATION_INFO, 800, False)
     elif meida_type == 'mlog':
-        result = music.mlog_detail(mv_id)
+        result = music.mlog_detail(mv_id, r)
         url = result['data']['resource']['content']['video']['urlInfo']['url']
 
     # else:
@@ -1012,7 +1024,7 @@ def get_mvs_items(mvs):
             name = mv['artistName']
         else:
             name = ''
-        mv_url = music.mv_url(mv['id']).get("data", {})
+        mv_url = music.mv_url(mv['id'], r).get("data", {})
         url = mv_url['url']
         if 'cover' in mv:
             cover = mv['cover']
@@ -1042,11 +1054,11 @@ def get_videos_items(videos):
         type = video['type']  # MV:0 , video:1
         if type == 0:
             type = tag('[MV]')
-            result = music.mv_url(video['vid']).get("data", {})
+            result = music.mv_url(video['vid'], r).get("data", {})
             url = result['url']
         else:
             type = ''
-            result = music.video_url(video['vid']).get("urls", [])
+            result = music.video_url(video['vid'], r).get("urls", [])
             url = result[0]['url']
         ar_name = '&'.join([str(creator['userName'])
                            for creator in video['creator']])
@@ -1647,7 +1659,7 @@ def sea(type):
             # MV
             for video in result['video']['videos']:
                 if video['type'] == 0:
-                    mv_url = music.mv_url(video['vid']).get("data", {})
+                    mv_url = music.mv_url(video['vid'], r).get("data", {})
                     url = mv_url['url']
                     ar_name = '&'.join([str(creator['userName'])
                                        for creator in video['creator']])
@@ -1669,7 +1681,7 @@ def sea(type):
             # 视频
             for video in result['video']['videos']:
                 if video['type'] == 1:
-                    video_url = music.video_url(video['vid']).get("urls", [])
+                    video_url = music.video_url(video['vid'], r).get("urls", [])
                     url = video_url[0]['url']
                     ar_name = '&'.join([str(creator['userName'])
                                        for creator in video['creator']])

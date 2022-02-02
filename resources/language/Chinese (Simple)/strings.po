@@ -66,7 +66,11 @@ msgstr "优先播放MV"
 
 msgctxt "#33006"
 msgid "Default Quality"
-msgstr "播放音质"
+msgstr "音质"
+
+msgctxt "#33007"
+msgid "Default Resolution"
+msgstr "画质"
 
 msgctxt "#32011"
 msgid "Standard"
@@ -84,6 +88,25 @@ msgctxt "#32014"
 msgid "Lossless"
 msgstr "无损"
 
+# 标清
+msgctxt "#32021"
+msgid "240"
+msgstr "240"
+
+# 高清
+msgctxt "#32022"
+msgid "480"
+msgstr "480"
+
+# 超清
+msgctxt "#32023"
+msgid "720"
+msgstr "720"
+
+# 1080P
+msgctxt "#32024"
+msgid "1080"
+msgstr "1080"
 
 msgctxt "#33008"
 msgid "Follow Author"

@@ -17,6 +17,7 @@
 	  <setting id="show_index" type="bool" label="33004" default="true"/>
 	  <setting id="mvfirst" type="bool" label="33005" default="true"/>    
 	  <setting id="quality" type="select" label="33006" lvalues="32011|32012|32013|32014" />	  
+	  <setting id="resolution" type="select" label="33007" lvalues="32021|32022|32023|32024" />	  
 	 	  
 	  <setting id="follow" type="bool" label="33008" default="true" />	 
 	  <setting id="auto_play_mv" type="bool" label="33009" default="false" /> 
