@@ -108,10 +108,6 @@ msgctxt "#32024"
 msgid "1080"
 msgstr "1080"
 
-msgctxt "#33008"
-msgid "Follow Author"
-msgstr "网易云音乐中关注作者"
-
 msgctxt "#33009"
 msgid "Auto Play Mv"
 msgstr "歌曲不能播放时自动播放MV(如有)"

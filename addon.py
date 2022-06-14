@@ -22,8 +22,6 @@ if 'logined' not in account:
     account['logined'] = False
 if 'first_run' not in account:
     account['first_run'] = True
-if 'follow' not in account:
-    account['follow'] = False
 
 music = NetEase()
 
@@ -575,11 +573,6 @@ def play(meida_type, song_id, mv_id, sourceId, dt):
     plugin.set_resolved_url(url)
 
 
-def follow():
-    author_uid = 347837981
-    music.user_follow(author_uid)
-    account['follow'] = True
-
 
 # 主目录
 @plugin.route('/')
@@ -590,8 +583,6 @@ def index():
     items = []
     status = account['logined']
 
-    if xbmcplugin.getSetting(int(sys.argv[1]), 'follow') == 'true' and not account['follow']:
-        follow()
 
     if xbmcplugin.getSetting(int(sys.argv[1]), 'daily_recommend') == 'true' and status:
         items.append(
