@@ -40,9 +40,17 @@ if not account['logined'] and xbmcplugin.getSetting(int(sys.argv[1]), 'login') =
             dialog = xbmcgui.Dialog()
             dialog.notification('登录成功', '请重启软件以解锁更多功能',
                                 xbmcgui.NOTIFICATION_INFO, 800, False)
+        elif login['code'] == -1:
+            dialog = xbmcgui.Dialog()
+            dialog.notification('登录失败', '可能是网络问题',
+                                xbmcgui.NOTIFICATION_INFO, 800, False)
+        elif login['code'] == -462:
+            dialog = xbmcgui.Dialog()
+            dialog.notification('登录失败', '-462: 需要验证',
+                                xbmcgui.NOTIFICATION_INFO, 800, False)
         else:
             dialog = xbmcgui.Dialog()
-            dialog.notification('登录失败', '账号或密码错误',
+            dialog.notification('登录失败', str(login['code']) + ': ' + login.get('msg', ''),
                                 xbmcgui.NOTIFICATION_INFO, 800, False)
 # logout
 if account['logined'] and xbmcplugin.getSetting(int(sys.argv[1]), 'login') == 'false':
