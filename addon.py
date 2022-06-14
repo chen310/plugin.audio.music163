@@ -70,6 +70,8 @@ elif quality == '1':
 elif quality == '2':
     bitrate = 320000
 elif quality == '3':
+    bitrate = 350000
+elif quality == '4':
     bitrate = 999000
 else:
     bitrate = 128000
@@ -330,8 +332,14 @@ def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, sou
             if (play['privilege']['flag'] & 64) > 0 and xbmcplugin.getSetting(int(sys.argv[1]), 'exclusive_tag') == 'true':
                 label += tag(' 独家')
             # if play['privilege']['downloadMaxbr']>=999000 and xbmcplugin.getSetting(int(sys.argv[1]),'sq_tag') == 'true':
-            if play['privilege']['maxbr'] >= 999000 and xbmcplugin.getSetting(int(sys.argv[1]), 'sq_tag') == 'true':
-                label += tag(' SQ')
+            if xbmcplugin.getSetting(int(sys.argv[1]), 'sq_tag') == 'true':
+                if 'playMaxBrLevel' in play['privilege']:
+                    if play['privilege']['playMaxBrLevel'] == 'hires':
+                        label += tag(' Hi-Res')
+                    elif play['privilege']['playMaxBrLevel'] == 'lossless':
+                        label += tag(' SQ')
+                elif play['privilege']['maxbr'] >= 999000:
+                    label += tag(' SQ')
             # payed: 0 未付费 | 3 付费单曲 | 5 付费专辑
             if 'preSell' in play['privilege'] and play['privilege']['preSell'] == True and xbmcplugin.getSetting(int(sys.argv[1]), 'presell_tag') == 'true':
                 label += tag(' 预售')

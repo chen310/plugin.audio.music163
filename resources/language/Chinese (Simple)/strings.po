@@ -88,6 +88,10 @@ msgctxt "#32014"
 msgid "Lossless"
 msgstr "无损"
 
+msgctxt "#32015"
+msgid "Hires"
+msgstr "Hi-Res"
+
 # 标清
 msgctxt "#32021"
 msgid "240"
