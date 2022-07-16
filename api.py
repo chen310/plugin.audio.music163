@@ -38,6 +38,11 @@ class NetEase(object):
         cookie_jar.load()
         self.session = requests.Session()
         self.session.cookies = cookie_jar
+
+        if 'appver' not in self.session.cookies:
+            cookie = self.make_cookie('appver', '2.10.2')
+            self.session.cookies.set_cookie(cookie)
+
         for cookie in cookie_jar:
             if cookie.is_expired():
                 cookie_jar.clear()
