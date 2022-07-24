@@ -17,6 +17,7 @@ BASE_URL = "https://music.163.com"
 PROFILE = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
 COOKIE_PATH = os.path.join(PROFILE, 'cookie.txt')
 if not os.path.exists(COOKIE_PATH):
+    os.makedirs(PROFILE)
     with open(COOKIE_PATH, 'w') as f:
         f.write('# Netscape HTTP Cookie File\n')
 
