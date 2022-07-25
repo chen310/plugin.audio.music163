@@ -15,9 +15,10 @@ DEFAULT_TIMEOUT = 10
 BASE_URL = "https://music.163.com"
 
 PROFILE = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
+if not os.path.exists(PROFILE):
+    os.makedirs(PROFILE)
 COOKIE_PATH = os.path.join(PROFILE, 'cookie.txt')
 if not os.path.exists(COOKIE_PATH):
-    os.makedirs(PROFILE)
     with open(COOKIE_PATH, 'w') as f:
         f.write('# Netscape HTTP Cookie File\n')
 
