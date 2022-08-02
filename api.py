@@ -14,7 +14,10 @@ DEFAULT_TIMEOUT = 10
 
 BASE_URL = "https://music.163.com"
 
-PROFILE = xbmcvfs.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
+if sys.version_info.major >= 3:
+    PROFILE = xbmcvfs.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
+else:
+    PROFILE = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
 if not os.path.exists(PROFILE):
     os.makedirs(PROFILE)
 COOKIE_PATH = os.path.join(PROFILE, 'cookie.txt')
