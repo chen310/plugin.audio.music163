@@ -17,6 +17,10 @@ jobs:
     steps:
       - name: Clone local repository
         uses: actions/checkout@v2
+      - name: Get version
+        run: |
+          ver=$(cat addon.xml | grep plugin.audio.music163 | grep -o "[0-9]\.[\.0-9]*")
+          echo "VERSION=$ver" >> $GITHUB_ENV
       - name: Move files
         run: |
           mkdir plugin.audio.music163
@@ -26,7 +30,7 @@ jobs:
       - name: Upload addon
         uses: actions/upload-artifact@v2
         with:
-          name: plugin.audio.music163-python3
+          name: plugin.audio.music163-${{ env.VERSION }}-python3
           path: ./
       - name: Change python version
         run: |
@@ -34,5 +38,5 @@ jobs:
       - name: Upload addon
         uses: actions/upload-artifact@v2
         with:
-          name: plugin.audio.music163-python2
+          name: plugin.audio.music163-${{ env.VERSION }}-python2
           path: ./
