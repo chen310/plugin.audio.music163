@@ -497,3 +497,20 @@ class NetEase(object):
         path = "/weapi/playlist/unsubscribe"
         params = dict(id=id)
         return self.request("POST", path, params)
+
+    def user_level(self):
+        path = "/weapi/user/level"
+        return self.request("POST", path)
+
+    def login_qr_key(self):
+        path = '/weapi/login/qrcode/unikey'
+        params = dict(type=1)
+        return self.request("POST", path, params)
+
+    def login_qr_check(self, key):
+        path = '/weapi/login/qrcode/client/login'
+        params = dict(key=key, type=1)
+        data = self.request("POST", path, params)
+        if data.get('code', 0) == 803:
+            self.session.cookies.save()
+        return data

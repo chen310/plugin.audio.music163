@@ -1,11 +1,12 @@
 # -*- coding:utf-8 -*-
 from api import NetEase
-from xbmcswift2 import Plugin, xbmcgui, xbmcplugin, xbmc
+from xbmcswift2 import Plugin, xbmcgui, xbmcplugin, xbmc, xbmcaddon
 import re
 import sys
 import hashlib
 import time
 import os
+import xbmcvfs
 
 
 PY3 = sys.version_info.major >= 3
@@ -24,6 +25,13 @@ if 'first_run' not in account:
     account['first_run'] = True
 
 music = NetEase()
+
+if sys.version_info.major >= 3:
+    PROFILE = xbmcvfs.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
+    import qrcode
+else:
+    PROFILE = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
+qrcode_path = os.path.join(PROFILE, 'qrcode')
 
 # login
 if not account['logined'] and xbmcplugin.getSetting(int(sys.argv[1]), 'login') == 'true':
@@ -59,6 +67,9 @@ if account['logined'] and xbmcplugin.getSetting(int(sys.argv[1]), 'login') == 'f
     account['__csrf'] = ''
     account['__remember_me'] = ''
     account['uid'] = ''
+    COOKIE_PATH = os.path.join(PROFILE, 'cookie.txt')
+    with open(COOKIE_PATH, 'w') as f:
+        f.write('# Netscape HTTP Cookie File\n')
     dialog = xbmcgui.Dialog()
     dialog.notification(
         '退出成功', '账号退出成功', xbmcgui.NOTIFICATION_INFO, 800, False)
@@ -636,9 +647,56 @@ def index():
     if xbmcplugin.getSetting(int(sys.argv[1]), 'mlog') == 'true':
         items.append(
             {'label': 'Mlog', 'path': plugin.url_for('mlog_category')})
+    if PY3 and xbmcplugin.getSetting(int(sys.argv[1]), 'qrcode_login') == 'true' and not status:
+        items.append({'label': '扫码登陆', 'path': plugin.url_for('qrcode_login')})
 
     return items
 
+
+def qrcode_check():
+    if not os.path.exists(qrcode_path):
+        SUCCESS = xbmcvfs.mkdir(qrcode_path)
+        if not SUCCESS:
+            dialog = xbmcgui.Dialog()
+            dialog.notification('失败', '目录创建失败，无法使用该功能',
+                                xbmcgui.NOTIFICATION_INFO, 800, False)
+            return False
+        else:
+            temp_path = os.path.join(qrcode_path, str(int(time.time()))+'.png')
+            img = qrcode.make('temp_img')
+            img.save(temp_path)
+
+    _, files = xbmcvfs.listdir(qrcode_path)
+    for file in files:
+        xbmcvfs.delete(os.path.join(qrcode_path, file))
+    return True
+
+
+@plugin.route('/qrcode_login/')
+def qrcode_login():
+    if not qrcode_check():
+        return
+    result = music.login_qr_key()
+    key = result.get('unikey', '')
+    login_path = 'https://music.163.com/login?codekey={}'.format(key)
+
+    temp_path = os.path.join(qrcode_path, str(int(time.time()))+'.png')
+    img = qrcode.make(login_path)
+    img.save(temp_path)
+    dialog = xbmcgui.Dialog()
+    dialog.notification('扫码登录', '使用网易云音乐APP扫码登录', temp_path, 30000, False)
+
+    for i in range(10):
+        check_result = music.login_qr_check(key)
+        if check_result['code'] == 803:
+            account['logined'] = True
+            resp = music.user_level()
+            account['uid'] = resp['data']['userId']
+            dialog = xbmcgui.Dialog()
+            dialog.notification('登录成功', '请重启软件以解锁更多功能',
+                                xbmcgui.NOTIFICATION_INFO, 800, False)
+            break
+        time.sleep(3)
 
 # Mlog广场
 @plugin.route('/mlog_category/')
