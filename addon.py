@@ -7,6 +7,7 @@ import hashlib
 import time
 import os
 import xbmcvfs
+import qrcode
 
 
 PY3 = sys.version_info.major >= 3
@@ -28,7 +29,6 @@ music = NetEase()
 
 if sys.version_info.major >= 3:
     PROFILE = xbmcvfs.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
-    import qrcode
 else:
     PROFILE = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
 qrcode_path = os.path.join(PROFILE, 'qrcode')
@@ -647,7 +647,7 @@ def index():
     if xbmcplugin.getSetting(int(sys.argv[1]), 'mlog') == 'true':
         items.append(
             {'label': 'Mlog', 'path': plugin.url_for('mlog_category')})
-    if PY3 and xbmcplugin.getSetting(int(sys.argv[1]), 'qrcode_login') == 'true' and not status:
+    if xbmcplugin.getSetting(int(sys.argv[1]), 'qrcode_login') == 'true' and not status:
         items.append({'label': '扫码登陆', 'path': plugin.url_for('qrcode_login')})
 
     return items

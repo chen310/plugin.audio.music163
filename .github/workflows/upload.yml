@@ -35,7 +35,6 @@ jobs:
       - name: Change python version
         run: |
           sed -i "s/3\.0\.0/2\.7\.0/g" ./plugin.audio.music163/addon.xml
-          sed -i "/script\.module\.qrcode/d" ./plugin.audio.music163/addon.xml
       - name: Upload addon
         uses: actions/upload-artifact@v2
         with:
