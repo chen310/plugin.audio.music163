@@ -198,6 +198,10 @@ msgctxt "#34016"
 msgid "Mlog"
 msgstr "Mlog"
 
+msgctxt "#34017"
+msgid "Login"
+msgstr "扫码登录"
+
 
 ################################
 

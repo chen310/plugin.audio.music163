@@ -1,57 +1,58 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <category label="32001">
-      <setting label="32002" type="lsep"/>
-      <setting id="username" type="text" label="32003" default=""/>
-      <setting id="password" type="text" label="32004" default=""/>
-	  <setting id="login" type="bool" label="32005" default="true"/>
+	<category label="32001">
+		<setting label="32002" type="lsep"/>
+		<setting id="username" type="text" label="32003" default=""/>
+		<setting id="password" type="text" label="32004" default=""/>
+		<setting id="login" type="bool" label="32005" default="true"/>
 
-	  <setting label="32102" type="lsep"/>
-	  <setting id="host" type="text" label="32103" default=""/>
-      <setting id="port" type="text" label="32104" default=""/>
-      <setting id="enable_proxy" type="bool" label="32105" default="false" />
-    </category>   
+		<setting label="32102" type="lsep"/>
+		<setting id="host" type="text" label="32103" default=""/>
+		<setting id="port" type="text" label="32104" default=""/>
+		<setting id="enable_proxy" type="bool" label="32105" default="false" />
+	</category>
 	<category label="33001">
-      <setting label="33002" type="lsep"/>
-	  <setting id="number_of_songs_per_page" type="number" label="33003" default="100"/>
-	  <setting id="show_index" type="bool" label="33004" default="true"/>
-	  <setting id="mvfirst" type="bool" label="33005" default="true"/>    
-	  <setting id="quality" type="select" label="33006" lvalues="32011|32012|32013|32014|32015" />
-	  <setting id="resolution" type="select" label="33007" lvalues="32021|32022|32023|32024" />	  
-	 	  
-	  <setting id="auto_play_mv" type="bool" label="33009" default="false" /> 
-	  <setting id="hide_songs" type="bool" label="33010" default="false" /> 
-	  <setting id="hide_cover_songs" type="bool" label="33011" default="false" /> 
-	  <setting id="show_album_name" type="bool" label="33012" default="false" /> 
-	  <setting id="upload_play_record" type="bool" label="33013" default="true" /> 
-    </category>  
-	<category label="34001">
-      <setting label="34002" type="lsep"/>
-	  <setting id="rank" type="bool" label="34003" default="true"/>
-	  <setting id="top_artist" type="bool" label="34004" default="true"/>
-	  <setting id="daily_recommend" type="bool" label="34005" default="true"/>
-	  <setting id="personal_fm" type="bool" label="34006" default="true"/>
-	  <setting id="my_playlists" type="bool" label="34007" default="true"/>
-	  <setting id="recommend_playlists" type="bool" label="34008" default="true"/>
-	  <setting id="sublist" type="bool" label="34009" default="true"/>
-	  <setting id="search" type="bool" label="34010" default="true"/>
-	  <setting id="cloud_disk" type="bool" label="34011" default="true"/>
-	  <setting id="new_albums" type="bool" label="34012" default="true"/>
-	  <setting id="new_songs" type="bool" label="34013" default="true"/>
-	  <setting id="home_page" type="bool" label="34014" default="true"/>
-	  <setting id="top_mv" type="bool" label="34015" default="true"/>
-	  <setting id="mlog" type="bool" label="34016" default="true"/>		        	 
-    </category> 
+		<setting label="33002" type="lsep"/>
+		<setting id="number_of_songs_per_page" type="number" label="33003" default="100"/>
+		<setting id="show_index" type="bool" label="33004" default="true"/>
+		<setting id="mvfirst" type="bool" label="33005" default="true"/>
+		<setting id="quality" type="select" label="33006" lvalues="32011|32012|32013|32014|32015" />
+		<setting id="resolution" type="select" label="33007" lvalues="32021|32022|32023|32024" />
 
-    <category label="35001">
-      <setting label="35002" type="lsep"/>
-      <setting id="mv_tag" type="bool" label="35003" default="true" />
-	  <setting id="vip_tag" type="bool" label="35004" default="true"/>
-	  <setting id="cloud_tag" type="bool" label="35005" default="true"/>
-	  <setting id="exclusive_tag" type="bool" label="35006" default="true"/>
-	  <setting id="sq_tag" type="bool" label="35007" default="true"/>
-	  <setting id="pay_tag" type="bool" label="35008" default="true"/>
-	  <setting id="presell_tag" type="bool" label="35009" default="true"/>
-    </category>
+		<setting id="auto_play_mv" type="bool" label="33009" default="false" />
+		<setting id="hide_songs" type="bool" label="33010" default="false" />
+		<setting id="hide_cover_songs" type="bool" label="33011" default="false" />
+		<setting id="show_album_name" type="bool" label="33012" default="false" />
+		<setting id="upload_play_record" type="bool" label="33013" default="true" />
+	</category>
+	<category label="34001">
+		<setting label="34002" type="lsep"/>
+		<setting id="rank" type="bool" label="34003" default="true"/>
+		<setting id="top_artist" type="bool" label="34004" default="true"/>
+		<setting id="daily_recommend" type="bool" label="34005" default="true"/>
+		<setting id="personal_fm" type="bool" label="34006" default="true"/>
+		<setting id="my_playlists" type="bool" label="34007" default="true"/>
+		<setting id="recommend_playlists" type="bool" label="34008" default="true"/>
+		<setting id="sublist" type="bool" label="34009" default="true"/>
+		<setting id="search" type="bool" label="34010" default="true"/>
+		<setting id="cloud_disk" type="bool" label="34011" default="true"/>
+		<setting id="new_albums" type="bool" label="34012" default="true"/>
+		<setting id="new_songs" type="bool" label="34013" default="true"/>
+		<setting id="home_page" type="bool" label="34014" default="true"/>
+		<setting id="top_mv" type="bool" label="34015" default="true"/>
+		<setting id="mlog" type="bool" label="34016" default="true"/>
+		<setting id="qrcode_login" type="bool" label="34017" default="true"/>
+	</category>
+
+	<category label="35001">
+		<setting label="35002" type="lsep"/>
+		<setting id="mv_tag" type="bool" label="35003" default="true" />
+		<setting id="vip_tag" type="bool" label="35004" default="true"/>
+		<setting id="cloud_tag" type="bool" label="35005" default="true"/>
+		<setting id="exclusive_tag" type="bool" label="35006" default="true"/>
+		<setting id="sq_tag" type="bool" label="35007" default="true"/>
+		<setting id="pay_tag" type="bool" label="35008" default="true"/>
+		<setting id="presell_tag" type="bool" label="35009" default="true"/>
+	</category>
 
 </settings>
