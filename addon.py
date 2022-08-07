@@ -452,7 +452,8 @@ def song_contextmenu(action, meida_type, song_id, mv_id, sourceId, dt):
         ids = []
         names = []
         names.append('+ 新建歌单')
-        playlists = music.user_playlist(account['uid'], includeVideo=False)
+        playlists = music.user_playlist(
+            account['uid'], includeVideo=False).get('playlist', [])
         for playlist in playlists:
             if str(playlist['userId']) == str(account['uid']):
                 ids.append(playlist['id'])
