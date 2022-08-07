@@ -5,6 +5,7 @@
 		<setting id="username" type="text" label="32003" default=""/>
 		<setting id="password" type="text" label="32004" default=""/>
 		<setting id="login" type="bool" label="32005" default="true"/>
+		<setting label="32006" type="action" action="RunPlugin(plugin://plugin.audio.music163/qrcode_login/)"/>
 
 		<setting label="32102" type="lsep"/>
 		<setting id="host" type="text" label="32103" default=""/>

@@ -648,8 +648,6 @@ def index():
     if xbmcplugin.getSetting(int(sys.argv[1]), 'mlog') == 'true':
         items.append(
             {'label': 'Mlog', 'path': plugin.url_for('mlog_category')})
-    if xbmcplugin.getSetting(int(sys.argv[1]), 'qrcode_login') == 'true' and not status:
-        items.append({'label': '扫码登陆', 'path': plugin.url_for('qrcode_login')})
 
     return items
 
@@ -687,7 +685,7 @@ def qrcode_login():
     dialog = xbmcgui.Dialog()
     dialog.notification('扫码登录', '使用网易云音乐APP扫码登录', temp_path, 30000, False)
 
-    for i in range(10):
+    for i in range(8):
         check_result = music.login_qr_check(key)
         if check_result['code'] == 803:
             account['logined'] = True

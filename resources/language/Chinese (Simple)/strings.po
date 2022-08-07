@@ -24,6 +24,10 @@ msgctxt "#32005"
 msgid "Login"
 msgstr "登录"
 
+msgctxt "#32006"
+msgid "Qrcode Login"
+msgstr "扫码登录"
+
 ##
 
 msgctxt "#32102"
