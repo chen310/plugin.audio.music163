@@ -2,9 +2,12 @@
 <settings>
 	<category label="32001">
 		<setting label="32002" type="lsep"/>
-		<setting id="username" type="text" label="32003" default=""/>
-		<setting id="password" type="text" label="32004" default=""/>
-		<setting id="login" type="bool" label="32005" default="true"/>
+		<!-- <setting id="username" type="text" label="32003" default=""/> -->
+		<!-- <setting id="password" type="text" label="32004" default=""/> -->
+		<!-- <setting id="login" type="bool" label="32005" default="true"/> -->
+		<setting label="32006" type="action" action="RunPlugin(plugin://plugin.audio.music163/login/)"/>
+		<setting label="32007" type="action" action="RunPlugin(plugin://plugin.audio.music163/qrcode_login/)"/>
+		<setting label="32008" type="action" action="RunPlugin(plugin://plugin.audio.music163/logout/)"/>
 
 		<setting label="32102" type="lsep"/>
 		<setting id="host" type="text" label="32103" default=""/>
@@ -41,7 +44,6 @@
 		<setting id="home_page" type="bool" label="34014" default="true"/>
 		<setting id="top_mv" type="bool" label="34015" default="true"/>
 		<setting id="mlog" type="bool" label="34016" default="true"/>
-		<setting id="qrcode_login" type="bool" label="34017" default="true"/>
 	</category>
 
 	<category label="35001">
