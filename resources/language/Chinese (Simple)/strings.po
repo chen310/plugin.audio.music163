@@ -12,21 +12,29 @@ msgctxt "#32002"
 msgid "Account Settings"
 msgstr "账号设置"
 
-msgctxt "#32003"
-msgid "Username"
-msgstr "用户名"
+# msgctxt "#32003"
+# msgid "Username"
+# msgstr "用户名"
 
-msgctxt "#32004"
-msgid "Password"
-msgstr "密码"
+# msgctxt "#32004"
+# msgid "Password"
+# msgstr "密码"
 
-msgctxt "#32005"
-msgid "Login"
-msgstr "登录"
+# msgctxt "#32005"
+# msgid "Login"
+# msgstr "登录"
 
 msgctxt "#32006"
+msgid "Login"
+msgstr "账号密码登录"
+
+msgctxt "#32007"
 msgid "Qrcode Login"
 msgstr "扫码登录"
+
+msgctxt "#32008"
+msgid "Logout"
+msgstr "退出登录"
 
 ##
 
@@ -201,10 +209,6 @@ msgstr "热门MV"
 msgctxt "#34016"
 msgid "Mlog"
 msgstr "Mlog"
-
-msgctxt "#34017"
-msgid "Login"
-msgstr "扫码登录"
 
 
 ################################

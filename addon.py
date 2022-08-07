@@ -33,39 +33,51 @@ else:
     PROFILE = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
 qrcode_path = os.path.join(PROFILE, 'qrcode')
 
-# login
-if not account['logined'] and xbmcplugin.getSetting(int(sys.argv[1]), 'login') == 'true':
-    username = xbmcplugin.getSetting(int(sys.argv[1]), 'username').strip()
-    password = xbmcplugin.getSetting(int(sys.argv[1]), 'password').strip()
+@plugin.route('/login/')
+def login():
+    keyboard = xbmc.Keyboard('', '请输入手机号或邮箱')
+    keyboard.doModal()
+    if (keyboard.isConfirmed()):
+        username = keyboard.getText().strip()
+        if not username:
+            return
+    else:
+        return
 
-    if len(password) > 0 and len(password) > 0:
-        password = hashlib.md5(password.encode('UTF-8')).hexdigest()
-        # 登录
-        login = music.login(username, password)
-        if login['code'] == 200:
-            account['logined'] = True
-            account['uid'] = login['profile']['userId']
-            dialog = xbmcgui.Dialog()
-            dialog.notification('登录成功', '请重启软件以解锁更多功能',
-                                xbmcgui.NOTIFICATION_INFO, 800, False)
-        elif login['code'] == -1:
-            dialog = xbmcgui.Dialog()
-            dialog.notification('登录失败', '可能是网络问题',
-                                xbmcgui.NOTIFICATION_INFO, 800, False)
-        elif login['code'] == -462:
-            dialog = xbmcgui.Dialog()
-            dialog.notification('登录失败', '-462: 需要验证',
-                                xbmcgui.NOTIFICATION_INFO, 800, False)
-        else:
-            dialog = xbmcgui.Dialog()
-            dialog.notification('登录失败', str(login['code']) + ': ' + login.get('msg', ''),
-                                xbmcgui.NOTIFICATION_INFO, 800, False)
-# logout
-if account['logined'] and xbmcplugin.getSetting(int(sys.argv[1]), 'login') == 'false':
+    keyboard = xbmc.Keyboard('', '请输入密码')
+    keyboard.doModal()
+    if (keyboard.isConfirmed()):
+        password = keyboard.getText().strip()
+        if not username:
+            return
+    else:
+        return
+    password = hashlib.md5(password.encode('UTF-8')).hexdigest()
+
+    login = music.login(username, password)
+    if login['code'] == 200:
+        account['logined'] = True
+        account['uid'] = login['profile']['userId']
+        dialog = xbmcgui.Dialog()
+        dialog.notification('登录成功', '请重启软件以解锁更多功能',
+                            xbmcgui.NOTIFICATION_INFO, 800, False)
+    elif login['code'] == -1:
+        dialog = xbmcgui.Dialog()
+        dialog.notification('登录失败', '可能是网络问题',
+                            xbmcgui.NOTIFICATION_INFO, 800, False)
+    elif login['code'] == -462:
+        dialog = xbmcgui.Dialog()
+        dialog.notification('登录失败', '-462: 需要验证',
+                            xbmcgui.NOTIFICATION_INFO, 800, False)
+    else:
+        dialog = xbmcgui.Dialog()
+        dialog.notification('登录失败', str(login['code']) + ': ' + login.get('msg', ''),
+                            xbmcgui.NOTIFICATION_INFO, 800, False)
+
+
+@plugin.route('/logout/')
+def logout():
     account['logined'] = False
-    account['MUSIC_U'] = ''
-    account['__csrf'] = ''
-    account['__remember_me'] = ''
     account['uid'] = ''
     COOKIE_PATH = os.path.join(PROFILE, 'cookie.txt')
     with open(COOKIE_PATH, 'w') as f:
@@ -462,7 +474,6 @@ def song_contextmenu(action, meida_type, song_id, mv_id, sourceId, dt):
         ret = dialog.contextmenu(names)
         if ret == 0:
             keyboard = xbmc.Keyboard('', '请输入歌单名称')
-            xbmc.sleep(1500)
             keyboard.doModal()
             if (keyboard.isConfirmed()):
                 name = keyboard.getText()
@@ -1508,7 +1519,6 @@ def search():
 def sea(type):
     items = []
     keyboard = xbmc.Keyboard('', '请输入搜索内容')
-    xbmc.sleep(1500)
     keyboard.doModal()
     if (keyboard.isConfirmed()):
         keyword = keyboard.getText()
