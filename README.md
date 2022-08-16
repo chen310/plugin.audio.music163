@@ -10,4 +10,4 @@
 
 ### 下载
 
-到 Actions 中[下载](https://github.com/chen310/plugin.audio.music163/actions)
+到 [Actions](https://github.com/chen310/plugin.audio.music163/actions) 或 [Releases](https://github.com/chen310/plugin.audio.music163/releases) 中下载
