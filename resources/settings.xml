@@ -27,6 +27,7 @@
 		<setting id="hide_cover_songs" type="bool" label="33011" default="false" />
 		<setting id="show_album_name" type="bool" label="33012" default="false" />
 		<setting id="upload_play_record" type="bool" label="33013" default="true" />
+		<setting label="33014" type="action" action="RunPlugin(plugin://plugin.audio.music163/delete_thumbnails/)"/>
 	</category>
 	<category label="34001">
 		<setting label="34002" type="lsep"/>

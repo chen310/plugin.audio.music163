@@ -144,6 +144,10 @@ msgctxt "#33013"
 msgid "Upload Play Record"
 msgstr "上传播放记录至网易云"
 
+msgctxt "#33014"
+msgid "Delete Thumbnails"
+msgstr "删除缩略图（其他插件的缩略图也会被删除）"
+
 ################################
 
 msgctxt "#34001"
