@@ -33,6 +33,47 @@ else:
     PROFILE = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
 qrcode_path = os.path.join(PROFILE, 'qrcode')
 
+
+def delete_files(path):
+    files = os.listdir(path)
+    for f in files:
+        f_path = os.path.join(path, f)
+        if os.path.isdir(f_path):
+            delete_files(f_path)
+        else:
+            os.remove(f_path)
+
+
+def caculate_size(path):
+    count = 0
+    size = 0
+    files = os.listdir(path)
+    for f in files:
+        f_path = os.path.join(path, f)
+        if os.path.isdir(f_path):
+            count_, size_ = caculate_size(f_path)
+            count += count_
+            size += size_
+        else:
+            count += 1
+            size += os.path.getsize(f_path)
+    return count, size
+
+
+@plugin.route('/delete_thumbnails/')
+def delete_thumbnails():
+    path = xbmcvfs.translatePath('special://thumbnails')
+    count, size = caculate_size(path)
+    dialog = xbmcgui.Dialog()
+    result = dialog.yesno('删除缩略图', '一共 {} 个文件，{} MB，确认删除吗？'.format(
+        count, B2M(size)), '取消', '确认')
+    if not result:
+        return
+    delete_files(path)
+    dialog.notification('删除缩略图', '删除成功',
+                        xbmcgui.NOTIFICATION_INFO, 800, False)
+
+
 @plugin.route('/login/')
 def login():
     keyboard = xbmc.Keyboard('', '请输入手机号或邮箱')
@@ -85,6 +126,7 @@ def logout():
     dialog = xbmcgui.Dialog()
     dialog.notification(
         '退出成功', '账号退出成功', xbmcgui.NOTIFICATION_INFO, 800, False)
+
 
 #limit = int(xbmcplugin.getSetting(int(sys.argv[1]),'number_of_songs_per_page'))
 limit = xbmcplugin.getSetting(int(sys.argv[1]), 'number_of_songs_per_page')
@@ -307,19 +349,19 @@ def get_songs(songs, privileges=[], picUrl=None, source=''):
                 else:
                     line += txt[index_list[temps[index]['left']] +
                                 1:temps[index]['first']]
-                line += tag(txt[temps[index]['first']:temps[index]['second']], 'blue')
+                line += tag(txt[temps[index]['first']: temps[index]['second']], 'blue')
 
                 for index2 in range(index+1, len(temps)):
                     if temps[index2]['left'] == temps[index]['left']:
-                        line += txt[temps[index2-1]['second']:temps[index2]['first']]
-                        line += tag(txt[temps[index2]['first']:temps[index2]['second']], 'blue')
+                        line += txt[temps[index2-1]['second']: temps[index2]['first']]
+                        line += tag(txt[temps[index2]['first']: temps[index2]['second']], 'blue')
                         skip.append(index2)
                     else:
                         break
                 if right == -1:
-                    line += txt[temps[index]['second']:len(txt)]
+                    line += txt[temps[index]['second']: len(txt)]
                 else:
-                    line += txt[temps[index]['second']:index_list[temps[index]['right']]] + '...'
+                    line += txt[temps[index]['second']: index_list[temps[index]['right']]] + '...'
 
                 data['second_line'] += line
         else:
@@ -612,7 +654,6 @@ def play(meida_type, song_id, mv_id, sourceId, dt):
     plugin.set_resolved_url(url)
 
 
-
 # 主目录
 @plugin.route('/')
 def index():
@@ -621,7 +662,6 @@ def index():
         xbmcgui.Dialog().ok('使用提示', '在设置中登录账号以解锁更多功能')
     items = []
     status = account['logined']
-
 
     if xbmcplugin.getSetting(int(sys.argv[1]), 'daily_recommend') == 'true' and status:
         items.append(
@@ -709,6 +749,8 @@ def qrcode_login():
         time.sleep(3)
 
 # Mlog广场
+
+
 @plugin.route('/mlog_category/')
 def mlog_category():
     categories = {
@@ -1755,7 +1797,8 @@ def sea(type):
             # 视频
             for video in result['video']['videos']:
                 if video['type'] == 1:
-                    video_url = music.video_url(video['vid'], r).get("urls", [])
+                    video_url = music.video_url(
+                        video['vid'], r).get("urls", [])
                     url = video_url[0]['url']
                     ar_name = '&'.join([str(creator['userName'])
                                        for creator in video['creator']])
