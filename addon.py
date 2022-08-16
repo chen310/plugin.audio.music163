@@ -748,9 +748,8 @@ def qrcode_login():
             break
         time.sleep(3)
 
+
 # Mlog广场
-
-
 @plugin.route('/mlog_category/')
 def mlog_category():
     categories = {
