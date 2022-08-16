@@ -349,19 +349,19 @@ def get_songs(songs, privileges=[], picUrl=None, source=''):
                 else:
                     line += txt[index_list[temps[index]['left']] +
                                 1:temps[index]['first']]
-                line += tag(txt[temps[index]['first']                            :temps[index]['second']], 'blue')
+                line += tag(txt[temps[index]['first']: temps[index]['second']], 'blue')
 
                 for index2 in range(index+1, len(temps)):
                     if temps[index2]['left'] == temps[index]['left']:
-                        line += txt[temps[index2-1]['second']                                    :temps[index2]['first']]
-                        line += tag(txt[temps[index2]['first']                                    :temps[index2]['second']], 'blue')
+                        line += txt[temps[index2-1]['second']: temps[index2]['first']]
+                        line += tag(txt[temps[index2]['first']: temps[index2]['second']], 'blue')
                         skip.append(index2)
                     else:
                         break
                 if right == -1:
-                    line += txt[temps[index]['second']:len(txt)]
+                    line += txt[temps[index]['second']: len(txt)]
                 else:
-                    line += txt[temps[index]['second']                                :index_list[temps[index]['right']]] + '...'
+                    line += txt[temps[index]['second']: index_list[temps[index]['right']]] + '...'
 
                 data['second_line'] += line
         else:
