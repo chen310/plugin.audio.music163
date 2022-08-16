@@ -43,12 +43,30 @@ def delete_files(path):
         else:
             os.remove(f_path)
 
+def caculate_size(path):
+    count = 0
+    size = 0
+    files = os.listdir(path)
+    for f in files:
+        f_path= os.path.join(path, f)
+        if os.path.isdir(f_path):
+            count_, size_ = caculate_size(f_path)
+            count += count_
+            size += size_
+        else:
+            count += 1
+            size += os.path.getsize(f_path)
+    return count, size
 
 @plugin.route('/delete_thumbnails/')
 def delete_thumbnails():
     path = xbmcvfs.translatePath('special://thumbnails')
-    delete_files(path)
+    count, size = caculate_size(path)
     dialog = xbmcgui.Dialog()
+    result = dialog.yesno('删除缩略图','一共 {} 个文件，{} MB，确认删除吗？'.format(count, B2M(size)), '取消', '确认')
+    if not result:
+        return
+    delete_files(path)
     dialog.notification('删除缩略图', '删除成功',
                         xbmcgui.NOTIFICATION_INFO, 800, False)
 
