@@ -8,6 +8,7 @@ import time
 import os
 import xbmcvfs
 import qrcode
+from datetime import datetime, timedelta
 
 
 PY3 = sys.version_info.major >= 3
@@ -371,7 +372,7 @@ def get_songs(songs, privileges=[], picUrl=None, source=''):
     return datas
 
 
-def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, source='', sourceId=0):
+def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, source='', sourceId=0, enable_index=True):
     songs = get_songs(datas, privileges, picUrl, source)
     items = []
     for play in songs:
@@ -379,7 +380,7 @@ def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, sou
         if play['privilege']['pl'] == 0 and xbmcplugin.getSetting(int(sys.argv[1]), 'hide_songs') == 'true':
             continue
         # 显示序号
-        if xbmcplugin.getSetting(int(sys.argv[1]), 'show_index') == 'true':
+        if xbmcplugin.getSetting(int(sys.argv[1]), 'show_index') == 'true' and enable_index:
             offset += 1
             if offset < 10:
                 str_offset = '0' + str(offset) + '.'
@@ -676,6 +677,9 @@ def index():
     if xbmcplugin.getSetting(int(sys.argv[1]), 'recommend_playlists') == 'true' and status:
         items.append(
             {'label': '推荐歌单', 'path': plugin.url_for('recommend_playlists')})
+    if xbmcplugin.getSetting(int(sys.argv[1]), 'vip_timemachine') == 'true' and status:
+        items.append(
+            {'label': '黑胶时光机', 'path': plugin.url_for('vip_timemachine')})
     if xbmcplugin.getSetting(int(sys.argv[1]), 'rank') == 'true':
         items.append({'label': '排行榜', 'path': plugin.url_for('toplists')})
     if xbmcplugin.getSetting(int(sys.argv[1]), 'top_artist') == 'true':
@@ -699,6 +703,98 @@ def index():
     if xbmcplugin.getSetting(int(sys.argv[1]), 'mlog') == 'true':
         items.append(
             {'label': 'Mlog', 'path': plugin.url_for('mlog_category')})
+
+    return items
+
+
+@plugin.route('/vip_timemachine/')
+def vip_timemachine():
+    time_machine = plugin.get_storage('time_machine')
+    items = []
+    now = datetime.now()
+    this_year_start = datetime(now.year, 1, 1)
+    this_year_end = datetime(now.year + 1, 1, 1) - timedelta(days=1)
+    this_year_start_timestamp = int(
+        time.mktime(this_year_start.timetuple()) * 1000)
+    this_year_end_timestamp = int(time.mktime(
+        this_year_end.timetuple()) * 1000) - 1
+    resp = music.vip_timemachine(
+        this_year_start_timestamp, this_year_end_timestamp)
+
+    if resp['code'] != 200:
+        return items
+    weeks = resp.get('data', {}).get('detail', [])
+    time_machine['weeks'] = weeks
+    for i, week in enumerate(weeks):
+        start_date = time.strftime(
+            "%m.%d", time.localtime(week['weekStartTime']//1000))
+        end_date = time.strftime(
+            "%m.%d", time.localtime(week['weekEndTime']//1000))
+        title = week['data']['keyword'] + ' ' + \
+            tag(start_date + '-' + end_date, 'red')
+
+        if 'subTitle' in week['data'] and week['data']['subTitle']:
+            second_line = ''
+            subs = week['data']['subTitle'].split('##1')
+            for i, sub in enumerate(subs):
+                if i % 2 == 0:
+                    second_line += tag(sub, 'gray')
+                else:
+                    second_line += tag(sub, 'blue')
+            title += '\n' + second_line
+        plot_info = ''
+        styles = (week['data'].get('listenCommonStyle', {})
+                  or {}).get('styleDetailList', [])
+        if styles:
+            plot_info += '[B]常听曲风:[/B]' + '\n'
+            for style in styles:
+                plot_info += tag(style['styleName'], 'blue') + tag(' %.2f%%' %
+                                                                   round(float(style['percent']) * 100, 2), 'pink') + '\n'
+        emotions = (week['data'].get('musicEmotion', {})
+                    or {}).get('subTitle', [])
+        if emotions:
+            if plot_info:
+                plot_info += '\n'
+            plot_info += '[B]音乐情绪:[/B]' + '\n' + '你本周的音乐情绪是'
+            emotions = [tag(e, 'pink') for e in emotions]
+            if len(emotions) > 2:
+                plot_info += '、'.join(emotions[:-1]) + \
+                    '与' + emotions[-1] + '\n'
+            else:
+                plot_info += '与'.join(emotions) + '\n'
+        items.append({
+            'label': title,
+            'path': plugin.url_for('vip_timemachine_week', index=i),
+            'info': {
+                'plot': plot_info
+            },
+            'info_type': 'video',
+        })
+    return items
+
+
+@plugin.route('/vip_timemachine_week/<index>/')
+def vip_timemachine_week(index):
+    time_machine = plugin.get_storage('time_machine')
+    data = time_machine['weeks'][int(index)]['data']
+    songs = []
+    if 'song' in data:
+        if 'tag' not in data['song'] or not data['song']['tag']:
+            data['song']['tag'] = '高光歌曲'
+        songs.append(data['song'])
+    songs.extend(data.get('favoriteSongs', []))
+    songs.extend((data.get('musicYear', {}) or {}).get('yearSingles', []))
+    songs.extend((data.get('listenSingle', {}) or {}).get('singles', []))
+    songs.extend(data.get('songInfos', []))
+    ids = list(set([a['songId'] for a in songs]))
+    resp = music.songs_detail(ids)
+    datas = resp['songs']
+    privileges = resp['privileges']
+    items = get_songs_items(datas, privileges=privileges, enable_index=False)
+    for i, item in enumerate(items):
+        if songs[i]['tag']:
+            item['label'] = tag('[{}]'.format(
+                songs[i]['tag']), 'pink') + item['label']
 
     return items
 
@@ -1826,7 +1922,7 @@ def sea(type):
                     song for song in sea_songs if '翻自' not in song['name'] and 'cover' not in song['name'].lower()]
             else:
                 filtered_songs = sea_songs
-            items.extend(get_songs_items(filtered_songs, getmv=False))
+            items.extend(get_songs_items(filtered_songs, getmv=False, enable_index=False))
             if len(items) > 0:
                 is_empty = False
 

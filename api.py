@@ -514,3 +514,9 @@ class NetEase(object):
         if data.get('code', 0) == 803:
             self.session.cookies.save()
         return data
+
+    def vip_timemachine(self, startTime, endTime, limit=60):
+        path = '/weapi/vipmusic/newrecord/weekflow'
+        params = dict(startTime=startTime,
+                      endTime=endTime, type=1, limit=limit)
+        return self.request("POST", path, params)
