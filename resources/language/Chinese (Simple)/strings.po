@@ -214,6 +214,9 @@ msgctxt "#34016"
 msgid "Mlog"
 msgstr "Mlog"
 
+msgctxt "#34017"
+msgid "Vip Timemachine"
+msgstr "黑胶时光机"
 
 ################################
 

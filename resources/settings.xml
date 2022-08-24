@@ -17,7 +17,7 @@
 	<category label="33001">
 		<setting label="33002" type="lsep"/>
 		<setting id="number_of_songs_per_page" type="number" label="33003" default="100"/>
-		<setting id="show_index" type="bool" label="33004" default="true"/>
+		<setting id="show_index" type="bool" label="33004" default="false"/>
 		<setting id="mvfirst" type="bool" label="33005" default="true"/>
 		<setting id="quality" type="select" label="33006" lvalues="32011|32012|32013|32014|32015" />
 		<setting id="resolution" type="select" label="33007" lvalues="32021|32022|32023|32024" />
@@ -45,6 +45,7 @@
 		<setting id="home_page" type="bool" label="34014" default="true"/>
 		<setting id="top_mv" type="bool" label="34015" default="true"/>
 		<setting id="mlog" type="bool" label="34016" default="true"/>
+		<setting id="vip_timemachine" type="bool" label="34017" default="true"/>
 	</category>
 
 	<category label="35001">
