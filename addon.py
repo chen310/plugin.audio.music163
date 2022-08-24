@@ -713,11 +713,11 @@ def vip_timemachine():
     items = []
     now = datetime.now()
     this_year_start = datetime(now.year, 1, 1)
-    this_year_end = datetime(now.year + 1, 1, 1) - timedelta(days=1)
+    next_year_start = datetime(now.year + 1, 1, 1)
     this_year_start_timestamp = int(
         time.mktime(this_year_start.timetuple()) * 1000)
     this_year_end_timestamp = int(time.mktime(
-        this_year_end.timetuple()) * 1000) - 1
+        next_year_start.timetuple()) * 1000) - 1
     resp = music.vip_timemachine(
         this_year_start_timestamp, this_year_end_timestamp)
 
