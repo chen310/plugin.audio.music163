@@ -8,7 +8,7 @@ import time
 import os
 import xbmcvfs
 import qrcode
-from datetime import datetime, timedelta
+from datetime import datetime
 
 
 PY3 = sys.version_info.major >= 3
