@@ -8,7 +8,7 @@ import time
 import os
 import xbmcvfs
 import qrcode
-from datetime import datetime, timedelta
+from datetime import datetime
 
 
 PY3 = sys.version_info.major >= 3
@@ -743,9 +743,28 @@ def vip_timemachine():
                     second_line += tag(sub, 'blue')
             title += '\n' + second_line
         plot_info = ''
+        plot_info += '[B]听歌数据:[/B]' + '\n'
+        listenSongs = tag(str(week['data']['listenSongs']) + '首', 'pink')
+        listenCount = tag(str(week['data']['listenWeekCount']) + '次', 'pink')
+        listentime = ''
+        t = week['data']['listenWeekTime']
+        if t == 0:
+            listentime += '0秒钟'
+        else:
+            if t >= 3600:
+                listentime += str(t//3600) + '小时'
+            if t % 3600 >= 0:
+                listentime += str((t % 3600)//60) + '分钟'
+            if t % 60 > 0:
+                listentime += str(t % 60) + '秒钟'
+        listentime = tag(listentime, 'pink')
+        plot_info += '本周听歌{}，共听了{}\n累计时长{}\n'.format(
+            listenSongs, listenCount, listentime)
         styles = (week['data'].get('listenCommonStyle', {})
                   or {}).get('styleDetailList', [])
         if styles:
+            if plot_info:
+                plot_info += '\n'
             plot_info += '[B]常听曲风:[/B]' + '\n'
             for style in styles:
                 plot_info += tag(style['styleName'], 'blue') + tag(' %.2f%%' %
