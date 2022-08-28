@@ -725,7 +725,7 @@ def vip_timemachine():
         return items
     weeks = resp.get('data', {}).get('detail', [])
     time_machine['weeks'] = weeks
-    for i, week in enumerate(weeks):
+    for index, week in enumerate(weeks):
         start_date = time.strftime(
             "%m.%d", time.localtime(week['weekStartTime']//1000))
         end_date = time.strftime(
@@ -783,7 +783,7 @@ def vip_timemachine():
                 plot_info += '与'.join(emotions) + '\n'
         items.append({
             'label': title,
-            'path': plugin.url_for('vip_timemachine_week', index=i),
+            'path': plugin.url_for('vip_timemachine_week', index=index),
             'info': {
                 'plot': plot_info
             },
@@ -796,16 +796,23 @@ def vip_timemachine():
 def vip_timemachine_week(index):
     time_machine = plugin.get_storage('time_machine')
     data = time_machine['weeks'][int(index)]['data']
-    songs = []
+    temp = []
     if 'song' in data:
         if 'tag' not in data['song'] or not data['song']['tag']:
             data['song']['tag'] = '高光歌曲'
-        songs.append(data['song'])
-    songs.extend(data.get('favoriteSongs', []))
-    songs.extend((data.get('musicYear', {}) or {}).get('yearSingles', []))
-    songs.extend((data.get('listenSingle', {}) or {}).get('singles', []))
-    songs.extend(data.get('songInfos', []))
-    ids = list(set([a['songId'] for a in songs]))
+        temp.append(data['song'])
+    temp.extend(data.get('favoriteSongs', []))
+    temp.extend((data.get('musicYear', {}) or {}).get('yearSingles', []))
+    temp.extend((data.get('listenSingle', {}) or {}).get('singles', []))
+    temp.extend(data.get('songInfos', []))
+    songs_dict = {}
+    for s in temp:
+        if s['songId'] not in songs_dict:
+            songs_dict[s['songId']] = s
+        elif not songs_dict[s['songId']]['tag']:
+            songs_dict[s['songId']]['tag'] = s['tag']
+    ids = list(songs_dict.keys())
+    songs = list(songs_dict.values())
     resp = music.songs_detail(ids)
     datas = resp['songs']
     privileges = resp['privileges']
