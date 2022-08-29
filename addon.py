@@ -763,8 +763,8 @@ def vip_timemachine():
         styles = (week['data'].get('listenCommonStyle', {})
                   or {}).get('styleDetailList', [])
         if styles:
-            if plot_info:
-                plot_info += '\n'
+            # if plot_info:
+            #     plot_info += '\n'
             plot_info += '[B]常听曲风:[/B]' + '\n'
             for style in styles:
                 plot_info += tag(style['styleName'], 'blue') + tag(' %.2f%%' %
@@ -772,8 +772,8 @@ def vip_timemachine():
         emotions = (week['data'].get('musicEmotion', {})
                     or {}).get('subTitle', [])
         if emotions:
-            if plot_info:
-                plot_info += '\n'
+            # if plot_info:
+            #     plot_info += '\n'
             plot_info += '[B]音乐情绪:[/B]' + '\n' + '你本周的音乐情绪是'
             emotions = [tag(e, 'pink') for e in emotions]
             if len(emotions) > 2:
