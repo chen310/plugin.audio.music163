@@ -1197,7 +1197,7 @@ def get_djlists_items(playlists):
 
         items.append({
             'label': name,
-            'path': plugin.url_for('djlist', id=playlist['id']),
+            'path': plugin.url_for('djlist', id=playlist['id'], offset=0),
             'icon': img_url,
             'thumbnail': img_url,
             'info': {
@@ -1208,10 +1208,14 @@ def get_djlists_items(playlists):
     return items
 
 
-@plugin.route('/djlist/<id>/')
-def djlist(id):
-    resp = music.dj_program(id)
-    return get_dj_items(resp.get('programs'), id)
+@plugin.route('/djlist/<id>/<offset>/')
+def djlist(id, offset):
+    resp = music.dj_program(id, asc=True, offset=offset, limit=limit)
+    items = get_dj_items(resp.get('programs', []), id)
+    if resp.get('more', False):
+        items.append({'label': '[COLOR yellow]下一页[/COLOR]',
+                     'path': plugin.url_for('djlist', id=id, offset=int(offset)+limit)})
+    return items
 
 
 def get_dj_items(songs, sourceId):
