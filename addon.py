@@ -1210,7 +1210,11 @@ def get_djlists_items(playlists):
 
 @plugin.route('/djlist/<id>/<offset>/')
 def djlist(id, offset):
-    resp = music.dj_program(id, asc=True, offset=offset, limit=limit)
+    if xbmcplugin.getSetting(int(sys.argv[1]), 'reverse_radio') == 'true':
+        asc = False
+    else:
+        asc = True
+    resp = music.dj_program(id, asc=asc, offset=offset, limit=limit)
     items = get_dj_items(resp.get('programs', []), id)
     if resp.get('more', False):
         items.append({'label': '[COLOR yellow]下一页[/COLOR]',
