@@ -1159,7 +1159,7 @@ def song_purchased(offset):
 @plugin.route('/dj_sublist/<offset>/')
 def dj_sublist(offset):
     result = music.dj_sublist(offset=offset, limit=limit)
-    items = get_djlists_items(result['djRadios'])
+    items = get_djlists_items(result.get('djRadios', []))
     if result['hasMore']:
         items.append({'label': '[COLOR yellow]下一页[/COLOR]',
                      'path': plugin.url_for('dj_sublist', offset=int(offset)+limit)})
@@ -1217,7 +1217,6 @@ def djlist(id):
 def get_dj_items(songs, sourceId):
     items = []
     for play in songs:
-        # xbmc.log('voice_test:%s'%play)
         ar_name = play['dj']['nickname']
 
         label = play['name']
@@ -1449,7 +1448,6 @@ def album_sublist():
 
 def get_artists_items(artists):
     items = []
-    # xbmc.log(str(artists))
     for artist in artists:
         plot_info = '[COLOR pink]' + artist['name'] + '[/COLOR]'
         if 'musicSize' in artist and artist['musicSize']:
