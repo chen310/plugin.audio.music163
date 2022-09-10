@@ -2038,7 +2038,7 @@ def playlist(ptype, id):
         # 歌单中超过1000首歌
         if songs_number > len(datas):
             ids = [song['id'] for song in trackIds]
-            resp2 = music.songs_detail(ids[songs_number:])
+            resp2 = music.songs_detail(ids[len(datas):])
             datas.extend(resp2.get('songs', []))
             privileges.extend(resp2.get('privileges', []))
         return get_songs_items(datas, privileges=privileges, sourceId=id)
