@@ -23,7 +23,7 @@
 		<setting id="resolution" type="select" label="33007" lvalues="32021|32022|32023|32024" />
 		<setting id="reverse_radio" type="bool" label="33008" default="false" />
 		<setting id="auto_play_mv" type="bool" label="33009" default="false" />
-		<setting id="hide_songs" type="bool" label="33010" default="false" />
+		<setting id="hide_songs" type="bool" label="33010" default="true" />
 		<setting id="hide_cover_songs" type="bool" label="33011" default="false" />
 		<setting id="show_album_name" type="bool" label="33012" default="false" />
 		<setting id="upload_play_record" type="bool" label="33013" default="true" />
