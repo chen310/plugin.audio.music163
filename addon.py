@@ -121,6 +121,9 @@ def login():
 def logout():
     account['logined'] = False
     account['uid'] = ''
+    liked_songs = plugin.get_storage('liked_songs')
+    liked_songs['pid'] = 0
+    liked_songs['ids'] = []
     COOKIE_PATH = os.path.join(PROFILE, 'cookie.txt')
     with open(COOKIE_PATH, 'w') as f:
         f.write('# Netscape HTTP Cookie File\n')
@@ -396,6 +399,12 @@ def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, sou
         label = str_offset + ar_name + ' - ' + play['name']
         if 'alia' in play:
             label += tag('('+play['alia']+')', 'gray')
+
+        if play['privilege'] and play['privilege']['st'] < 0:
+            label = tag(label, 'grey')
+        liked_songs = plugin.get_storage('liked_songs')
+        if play['id'] in  liked_songs['ids']:
+            label += tag(' ♥')
         if play['privilege'] is not None:
             if play['privilege']['st'] < 0:
                 label = tag(label, 'grey')
@@ -663,6 +672,17 @@ def index():
         xbmcgui.Dialog().ok('使用提示', '在设置中登录账号以解锁更多功能')
     items = []
     status = account['logined']
+
+    liked_songs = plugin.get_storage('liked_songs')
+    if 'pid' not in liked_songs:
+        liked_songs['pid'] = 0
+    if 'ids' not in liked_songs:
+        liked_songs['ids'] = []
+    if liked_songs['pid']:
+        xbmc.log('liked_songs: pid = ' + str(liked_songs['pid']))
+        res = music.playlist_detail(liked_songs['pid'])
+        if res['code'] == 200:
+            liked_songs['ids'] = [s['id'] for s in res.get('playlist', {}).get('trackIds', [])]
 
     if xbmcplugin.getSetting(int(sys.argv[1]), 'daily_recommend') == 'true' and status:
         items.append(
@@ -1366,6 +1386,16 @@ def get_playlists_items(playlists):
     items = []
 
     for playlist in playlists:
+        if 'specialType' in playlist and playlist['specialType'] == 5:
+            liked_songs = plugin.get_storage('liked_songs')
+            if liked_songs['pid']:
+                liked_songs['pid'] = playlist['id']
+            else:
+                liked_songs['pid'] = playlist['id']
+                res = music.playlist_detail(liked_songs['pid'])
+                if res['code'] == 200:
+                    liked_songs['ids'] = [s['id'] for s in res.get('playlist', {}).get('trackIds', [])]
+
         context_menu = []
         plot_info = '[COLOR pink]' + playlist['name'] + \
             '[/COLOR]  共' + str(playlist['trackCount']) + '首歌\n'
@@ -1700,7 +1730,6 @@ def sea(type):
         kws = keyword.lower().split(' ')
         while '' in kws:
             kws.remove('')
-        xbmc.log('kws='+str(kws))
         if len(kws) == 0:
             pass
         else:
