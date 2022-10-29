@@ -403,15 +403,17 @@ def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, sou
         if play['privilege'] and play['privilege']['st'] < 0:
             label = tag(label, 'grey')
         liked_songs = plugin.get_storage('liked_songs')
-        if play['id'] in  liked_songs['ids']:
-            label += tag(' ♥')
+        if play['id'] in liked_songs['ids'] and xbmcplugin.getSetting(int(sys.argv[1]), 'like_tag') == 'true':
+            label = tag('♥ ') + label
+        else:
+            label = '    ' + label
         if play['privilege'] is not None:
             if play['privilege']['st'] < 0:
                 label = tag(label, 'grey')
             if play['privilege']['fee'] == 1 and xbmcplugin.getSetting(int(sys.argv[1]), 'vip_tag') == 'true':
                 label += tag(' vip')
             if play['privilege']['cs'] and xbmcplugin.getSetting(int(sys.argv[1]), 'cloud_tag') == 'true':
-                label += tag(' 云')
+                label += ' ☁'
             if (play['privilege']['flag'] & 64) > 0 and xbmcplugin.getSetting(int(sys.argv[1]), 'exclusive_tag') == 'true':
                 label += tag(' 独家')
             # if play['privilege']['downloadMaxbr']>=999000 and xbmcplugin.getSetting(int(sys.argv[1]),'sq_tag') == 'true':
@@ -567,7 +569,6 @@ def song_contextmenu(action, meida_type, song_id, mv_id, sourceId, dt):
         ret = dialog.contextmenu(names)
         if ret >= 0:
             result = music.playlist_add(ids[ret], [mv_id])
-            xbmc.log('sub_result:%s' % result)
             msg = ''
             if result['code'] == 200:
                 msg = '收藏成功'
@@ -623,7 +624,6 @@ def play(meida_type, song_id, mv_id, sourceId, dt):
             url = None
         else:
             url = urls[0]
-            xbmc.log('%s - %s' % (song_id, url))
         if url is None:
             if int(mv_id) > 0 and xbmcplugin.getSetting(int(sys.argv[1]), 'auto_play_mv') == 'true':
                 mv = music.mv_url(mv_id, r).get("data", {})
@@ -660,7 +660,7 @@ def play(meida_type, song_id, mv_id, sourceId, dt):
 
     # else:
     #     music.daka(song_id,sourceId,dt)
-    # xbmc.log('play_url:%s'%url)
+
     plugin.set_resolved_url(url)
 
 
@@ -678,8 +678,7 @@ def index():
         liked_songs['pid'] = 0
     if 'ids' not in liked_songs:
         liked_songs['ids'] = []
-    if liked_songs['pid']:
-        xbmc.log('liked_songs: pid = ' + str(liked_songs['pid']))
+    if xbmcplugin.getSetting(int(sys.argv[1]), 'line_tag') == 'true' and liked_songs['pid']:
         res = music.playlist_detail(liked_songs['pid'])
         if res['code'] == 200:
             liked_songs['ids'] = [s['id'] for s in res.get('playlist', {}).get('trackIds', [])]
@@ -1741,7 +1740,6 @@ def sea(type):
                 playlist.extend(result.get('data', []))
 
             for song in playlist:
-                # xbmc.log(str(song))
                 if 'ar' in song['simpleSong'] and song['simpleSong']['ar'] is not None and song['simpleSong']['ar'][0]['name'] is not None:
                     artist = " ".join(
                         [a["name"] for a in song['simpleSong']["ar"] if a["name"] is not None])

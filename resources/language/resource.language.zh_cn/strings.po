@@ -229,7 +229,7 @@ msgstr "VIP标志"
 
 msgctxt "#35005"
 msgid "Cloud disk tag"
-msgstr "云盘标志"
+msgstr "云盘标志 ☁"
 
 msgctxt "#35006"
 msgid "Exclusive tag"
@@ -246,3 +246,7 @@ msgstr "付费标志"
 msgctxt "#35009"
 msgid "PreSell tag"
 msgstr "预售标志"
+
+msgctxt "#35010"
+msgid "Like tag"
+msgstr "喜欢标志 [COLOR red]♥[/COLOR]"

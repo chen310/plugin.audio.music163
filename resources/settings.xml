@@ -57,6 +57,7 @@
 		<setting id="sq_tag" type="bool" label="35007" default="true"/>
 		<setting id="pay_tag" type="bool" label="35008" default="true"/>
 		<setting id="presell_tag" type="bool" label="35009" default="true"/>
+		<setting id="like_tag" type="bool" label="35010" default="true"/>
 	</category>
 
 </settings>
