@@ -549,6 +549,10 @@ def song_contextmenu(action, meida_type, song_id, mv_id, sourceId, dt):
             msg = ''
             if result['code'] == 200:
                 msg = '收藏成功'
+                liked_songs = plugin.get_storage('liked_songs')
+                if liked_songs['pid'] == playlist_id:
+                    liked_songs['ids'].append(int(song_id))
+                xbmc.executebuiltin('Container.Refresh')
             elif 'message' in result and result['message'] is not None:
                 msg = str(result['code'])+'错误:'+result['message']
             else:
@@ -678,7 +682,7 @@ def index():
         liked_songs['pid'] = 0
     if 'ids' not in liked_songs:
         liked_songs['ids'] = []
-    if xbmcplugin.getSetting(int(sys.argv[1]), 'line_tag') == 'true' and liked_songs['pid']:
+    if xbmcplugin.getSetting(int(sys.argv[1]), 'like_tag') == 'true' and liked_songs['pid']:
         res = music.playlist_detail(liked_songs['pid'])
         if res['code'] == 200:
             liked_songs['ids'] = [s['id'] for s in res.get('playlist', {}).get('trackIds', [])]
@@ -1350,6 +1354,7 @@ def playlist_contextmenu(action, id):
         if resp['code'] == 200:
             title = '成功'
             msg = '收藏成功'
+            xbmc.executebuiltin('Container.Refresh')
         elif resp['code'] == 401:
             title = '失败'
             msg = '不能收藏自己的歌单'
@@ -1373,10 +1378,10 @@ def playlist_contextmenu(action, id):
         if resp['code'] == 200:
             title = '成功'
             msg = '删除成功'
+            xbmc.executebuiltin('Container.Refresh')
         else:
             title = '失败'
             msg = '删除失败'
-        # xbmc.executebuiltin('Container.Refresh(%s)'%url)
         dialog = xbmcgui.Dialog()
         dialog.notification(title, msg, xbmcgui.NOTIFICATION_INFO, 800, False)
 
