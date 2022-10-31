@@ -139,6 +139,22 @@ msgctxt "#33014"
 msgid "Delete thumbnails (thumbnails of other addon will also be deleted)"
 msgstr "删除缩略图（其他插件的缩略图也会被删除）"
 
+msgctxt "#33015"
+msgid "Song naming format"
+msgstr "歌曲命名格式"
+
+msgctxt "#32031"
+msgid "artist - song"
+msgstr "歌手 - 歌曲名"
+
+msgctxt "#32032"
+msgid "song - artist"
+msgstr "歌曲名 - 歌手"
+
+msgctxt "#32033"
+msgid "song"
+msgstr "歌曲名"
+
 ################################
 
 msgctxt "#34001"

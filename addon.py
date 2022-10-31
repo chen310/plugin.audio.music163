@@ -395,8 +395,15 @@ def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, sou
         ar_name = play['artist']
 
         mv_id = play['mv_id']
-
-        label = str_offset + ar_name + ' - ' + play['name']
+        song_naming_format = xbmcplugin.getSetting(int(sys.argv[1]), 'song_naming_format')
+        if song_naming_format == '0':
+            label = str_offset + ar_name + ' - ' + play['name']
+        elif song_naming_format == '1':
+            label = str_offset + play['name'] + ' - ' + ar_name
+        elif song_naming_format == '2':
+            label = str_offset + play['name']
+        else:
+            label = str_offset + ar_name + ' - ' + play['name']
         if 'alia' in play:
             label += tag('('+play['alia']+')', 'gray')
 
