@@ -1461,7 +1461,14 @@ def get_playlists_items(playlists):
             img_url = ''
 
         name = playlist['name']
-        if 'specialType' in playlist and playlist['specialType'] == 200:
+
+        if playlist.get('privacy', 0) == 10:
+            name += tag(' 隐私')
+
+        if playlist.get('specialType', 0) == 300:
+            name += tag(' 共享')
+
+        if playlist.get('specialType', 0) == 200:
             name += tag(' 视频')
             ptype = 'video'
         else:
