@@ -440,7 +440,7 @@ def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, sou
         if mv_id > 0 and xbmcplugin.getSetting(int(sys.argv[1]), 'mv_tag') == 'true':
             label += tag(' MV', 'green')
 
-        if 'second_line' in play and play['second_line'] != '':
+        if 'second_line' in play and play['second_line']:
             label += '\n' + play['second_line']
 
         if mv_id > 0 and xbmcplugin.getSetting(int(sys.argv[1]), 'mvfirst') == 'true' and getmv:
