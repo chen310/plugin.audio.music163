@@ -63,7 +63,10 @@ def caculate_size(path):
 
 @plugin.route('/delete_thumbnails/')
 def delete_thumbnails():
-    path = xbmcvfs.translatePath('special://thumbnails')
+    if sys.version_info.major >= 3:
+        path = xbmcvfs.translatePath('special://thumbnails')
+    else:
+        path = xbmc.translatePath('special://thumbnails')
     count, size = caculate_size(path)
     dialog = xbmcgui.Dialog()
     result = dialog.yesno('删除缩略图', '一共 {} 个文件，{} MB，确认删除吗？'.format(
