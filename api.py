@@ -72,7 +72,7 @@ class NetEase(object):
                 )
             else:
                 resp = self.session.get(
-                    endpoint, params=data, headers=self.header, timeout=DEFAULT_TIMEOUT, proxies=self.proxies
+                    endpoint, params=data, headers=self.header, timeout=DEFAULT_TIMEOUT, proxies=self.proxies, verify=False
                 )
         elif method == "POST":
             if not self.enable_proxy:
@@ -81,7 +81,7 @@ class NetEase(object):
                 )
             else:
                 resp = self.session.post(
-                    endpoint, data=data, headers=self.header, timeout=DEFAULT_TIMEOUT, proxies=self.proxies
+                    endpoint, data=data, headers=self.header, timeout=DEFAULT_TIMEOUT, proxies=self.proxies, verify=False
                 )
         return resp
 
