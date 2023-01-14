@@ -415,8 +415,6 @@ def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, sou
         liked_songs = plugin.get_storage('liked_songs')
         if play['id'] in liked_songs['ids'] and xbmcplugin.getSetting(int(sys.argv[1]), 'like_tag') == 'true':
             label = tag('♥ ') + label
-        else:
-            label = '    ' + label
         if play['privilege'] is not None:
             if play['privilege']['st'] < 0:
                 label = tag(label, 'grey')
