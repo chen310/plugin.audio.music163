@@ -1810,6 +1810,19 @@ def sea(type):
             resp = music.songs_detail(ids)
             datas = resp['songs']
             privileges = resp['privileges']
+            # 调整云盘歌曲的次序
+            d1, d2, p1, p2 = [], [], [], []
+            for i in range(len(datas)):
+                if privileges[i]['cs']:
+                    d1.append(datas[i])
+                    p1.append(privileges[i])
+                else:
+                    d2.append(datas[i])
+                    p2.append(privileges[i])
+            d1.extend(d2)
+            p1.extend(p2)
+            datas = d1
+            privileges = p1
             items = get_songs_items(datas, privileges=privileges)
         else:
             dialog = xbmcgui.Dialog()
