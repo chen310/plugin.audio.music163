@@ -516,6 +516,9 @@ def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, sou
                         'dbid': play['id'],
                     },
                     'info_type': 'music',
+                    'properties': {
+                        'ncmid': str(play['id'])
+                    },
                 })
     return items
 
