@@ -46,7 +46,7 @@ class NetEase(object):
         self.session.cookies = cookie_jar
 
         if 'appver' not in self.session.cookies:
-            cookie = self.make_cookie('appver', '2.10.2')
+            cookie = self.make_cookie('appver', '8.7.01')
             self.session.cookies.set_cookie(cookie)
 
         for cookie in cookie_jar:
@@ -106,7 +106,7 @@ class NetEase(object):
             rest={},
         )
 
-    def request(self, method, path, params={}, default={"code": -1}, custom_cookies={'os': 'pc'}, return_json=True):
+    def request(self, method, path, params={}, default={"code": -1}, custom_cookies={'os': 'ios'}, return_json=True):
         endpoint = "{}{}".format(BASE_URL, path)
         csrf_token = ""
         for cookie in self.session.cookies:
