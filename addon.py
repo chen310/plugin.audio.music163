@@ -9,6 +9,7 @@ import os
 import xbmcvfs
 import qrcode
 from datetime import datetime
+import threading
 
 
 PY3 = sys.version_info.major >= 3
@@ -878,20 +879,7 @@ def qrcode_check():
     return True
 
 
-@plugin.route('/qrcode_login/')
-def qrcode_login():
-    if not qrcode_check():
-        return
-    result = music.login_qr_key()
-    key = result.get('unikey', '')
-    login_path = 'https://music.163.com/login?codekey={}'.format(key)
-
-    temp_path = os.path.join(qrcode_path, str(int(time.time()))+'.png')
-    img = qrcode.make(login_path)
-    img.save(temp_path)
-    dialog = xbmcgui.Dialog()
-    dialog.notification('扫码登录', '使用网易云音乐APP扫码登录', temp_path, 30000, False)
-
+def check_login_status(key):
     for i in range(8):
         check_result = music.login_qr_check(key)
         if check_result['code'] == 803:
@@ -903,6 +891,34 @@ def qrcode_login():
                                 xbmcgui.NOTIFICATION_INFO, 800, False)
             break
         time.sleep(3)
+
+
+@plugin.route('/qrcode_login/')
+def qrcode_login():
+    if not qrcode_check():
+        return
+    result = music.login_qr_key()
+    key = result.get('unikey', '')
+    login_path = 'https://music.163.com/login?codekey={}'.format(key)
+
+    temp_path = os.path.join(qrcode_path, str(int(time.time()))+'.png')
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_H,
+        box_size=10,
+        border=20
+    )
+    qr.add_data(login_path)
+    qr.make(fit=True)
+    img = qr.make_image()
+    img.save(temp_path)
+    dialog = xbmcgui.Dialog()
+    result = dialog.yesno('扫码登录', '请在在30秒内扫码登录', '取消', '确认')
+    if not result:
+        return
+    xbmc.executebuiltin('ShowPicture(%s)' % temp_path)
+    thread = threading.Thread(target=check_login_status, name='check', args=(key,))
+    thread.start()
 
 
 # Mlog广场
