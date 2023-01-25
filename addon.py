@@ -880,7 +880,7 @@ def qrcode_check():
 
 
 def check_login_status(key):
-    for i in range(8):
+    for i in range(10):
         check_result = music.login_qr_check(key)
         if check_result['code'] == 803:
             account['logined'] = True
@@ -889,8 +889,10 @@ def check_login_status(key):
             dialog = xbmcgui.Dialog()
             dialog.notification('登录成功', '请重启软件以解锁更多功能',
                                 xbmcgui.NOTIFICATION_INFO, 800, False)
+            xbmc.executebuiltin('Action(Back)')
             break
         time.sleep(3)
+    xbmc.executebuiltin('Action(Back)')
 
 
 @plugin.route('/qrcode_login/')
