@@ -8,17 +8,17 @@ from encrypt import encrypted_request
 from xbmcswift2 import xbmc, xbmcaddon, xbmcplugin
 from http.cookiejar import Cookie
 from http.cookiejar import MozillaCookieJar
-import re
+import xbmcvfs
+try:
+    xbmc.translatePath = xbmcvfs.translatePath
+except AttributeError:
+    pass
 
 DEFAULT_TIMEOUT = 10
 
 BASE_URL = "https://music.163.com"
 
-if sys.version_info.major >= 3:
-    from xbmcswift2 import xbmcvfs
-    PROFILE = xbmcvfs.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
-else:
-    PROFILE = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
+PROFILE = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
 if not os.path.exists(PROFILE):
     os.makedirs(PROFILE)
 COOKIE_PATH = os.path.join(PROFILE, 'cookie.txt')

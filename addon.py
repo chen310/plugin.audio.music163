@@ -10,7 +10,10 @@ import xbmcvfs
 import qrcode
 from datetime import datetime
 import threading
-
+try:
+    xbmc.translatePath = xbmcvfs.translatePath
+except AttributeError:
+    pass
 
 PY3 = sys.version_info.major >= 3
 if not PY3:
@@ -29,10 +32,7 @@ if 'first_run' not in account:
 
 music = NetEase()
 
-if sys.version_info.major >= 3:
-    PROFILE = xbmcvfs.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
-else:
-    PROFILE = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
+PROFILE = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
 qrcode_path = os.path.join(PROFILE, 'qrcode')
 
 
@@ -64,10 +64,7 @@ def caculate_size(path):
 
 @plugin.route('/delete_thumbnails/')
 def delete_thumbnails():
-    if sys.version_info.major >= 3:
-        path = xbmcvfs.translatePath('special://thumbnails')
-    else:
-        path = xbmc.translatePath('special://thumbnails')
+    path = xbmc.translatePath('special://thumbnails')
     count, size = caculate_size(path)
     dialog = xbmcgui.Dialog()
     result = dialog.yesno('删除缩略图', '一共 {} 个文件，{} MB，确认删除吗？'.format(
