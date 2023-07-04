@@ -142,17 +142,23 @@ else:
 
 quality = xbmcplugin.getSetting(int(sys.argv[1]), 'quality')
 if quality == '0':
-    bitrate = 128000
+    level = 'standard'
 elif quality == '1':
-    bitrate = 192000
+    level = 'higher'
 elif quality == '2':
-    bitrate = 320000
+    level = 'exhigh'
 elif quality == '3':
-    bitrate = 350000
+    level = 'lossless'
 elif quality == '4':
-    bitrate = 999000
+    level = 'hires'
+elif quality == '5':
+    level = 'jyeffect'
+elif quality == '6':
+    level = 'sky'
+elif quality == '7':
+    level = 'jymaster'
 else:
-    bitrate = 128000
+    level = 'standard'
 
 resolution = xbmcplugin.getSetting(int(sys.argv[1]), 'resolution')
 if resolution == '0':
@@ -429,6 +435,12 @@ def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, sou
                         label += tag(' Hi-Res')
                     elif play['privilege']['playMaxBrLevel'] == 'lossless':
                         label += tag(' SQ')
+                    elif play['privilege']['playMaxBrLevel'] == 'jyeffect':
+                        label += tag(' 环绕声')
+                    elif play['privilege']['playMaxBrLevel'] == 'sky':
+                        label += tag(' 沉浸声')
+                    elif play['privilege']['playMaxBrLevel'] == 'jymaster':
+                        label += tag(' 超清母带')
                 elif play['privilege']['maxbr'] >= 999000:
                     label += tag(' SQ')
             # payed: 0 未付费 | 3 付费单曲 | 5 付费专辑
@@ -593,7 +605,7 @@ def song_contextmenu(action, meida_type, song_id, mv_id, sourceId, dt):
             dialog.notification(
                 '收藏', msg, xbmcgui.NOTIFICATION_INFO, 800, False)
     elif action == 'play_song':
-        songs = music.songs_url([song_id], bitrate=bitrate).get("data", [])
+        songs = music.songs_url_v1([song_id], level=level).get("data", [])
         urls = [song['url'] for song in songs]
         url = urls[0]
         if url is None:
@@ -623,14 +635,14 @@ def play(meida_type, song_id, mv_id, sourceId, dt):
             dialog.notification('MV播放失败', '自动播放歌曲',
                                 xbmcgui.NOTIFICATION_INFO, 800, False)
 
-            songs = music.songs_url([song_id], bitrate=bitrate).get("data", [])
+            songs = music.songs_url_v1([song_id], level=level).get("data", [])
             urls = [song['url'] for song in songs]
             if len(urls) == 0:
                 url = None
             else:
                 url = urls[0]
     elif meida_type == 'song':
-        songs = music.songs_url([song_id], bitrate=bitrate).get("data", [])
+        songs = music.songs_url_v1([song_id], level=level).get("data", [])
         urls = [song['url'] for song in songs]
         # 一般是网络错误
         if len(urls) == 0:
@@ -656,7 +668,7 @@ def play(meida_type, song_id, mv_id, sourceId, dt):
     elif meida_type == 'dj':
         result = music.dj_detail(song_id)
         song_id = result['program']['mainSong']['id']
-        songs = music.songs_url([song_id], bitrate=bitrate).get("data", [])
+        songs = music.songs_url_v1([song_id], level=level).get("data", [])
         urls = [song['url'] for song in songs]
         if len(urls) == 0:
             url = None
@@ -1553,7 +1565,7 @@ def get_artists_items(artists):
 
 
 def get_users_items(users):
-    vip_level = ['壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖', '拾']
+    vip_level = ['', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖', '拾']
     items = []
     for user in users:
         plot_info = tag(user['nickname'], 'pink')
@@ -1577,7 +1589,10 @@ def get_users_items(users):
                 plot_info += level_str + '\n'
         elif user['vipType'] == 11:
             level = user['vipRights']['redVipLevel']
-            level_str = tag('vip·' + vip_level[level], 'red')
+            if 'redplus' in user['vipRights'] and user['vipRights']['redplus'] is not None:
+                level_str = tag('Svip·' + vip_level[level], 'gold')
+            else:
+                level_str = tag('vip·' + vip_level[level], 'red')
             if user['userType'] == 4:
                 plot_info += level_str + tag('  音乐人', 'red') + '\n'
             else:

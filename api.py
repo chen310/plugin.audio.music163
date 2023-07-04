@@ -46,7 +46,7 @@ class NetEase(object):
         self.session.cookies = cookie_jar
 
         if 'appver' not in self.session.cookies:
-            cookie = self.make_cookie('appver', '8.7.01')
+            cookie = self.make_cookie('appver', '8.10.10')
             self.session.cookies.set_cookie(cookie)
 
         for cookie in cookie_jar:
@@ -106,7 +106,7 @@ class NetEase(object):
             rest={},
         )
 
-    def request(self, method, path, params={}, default={"code": -1}, custom_cookies={'os': 'ios'}, return_json=True):
+    def request(self, method, path, params={}, default={"code": -1}, custom_cookies={'os': 'android'}, return_json=True):
         endpoint = "{}{}".format(BASE_URL, path)
         csrf_token = ""
         for cookie in self.session.cookies:
@@ -264,6 +264,11 @@ class NetEase(object):
     def songs_url(self, ids, bitrate):
         path = "/weapi/song/enhance/player/url"
         params = dict(ids=ids, br=bitrate)
+        return self.request("POST", path, params)
+
+    def songs_url_v1(self, ids, level):
+        path = "/weapi/song/enhance/player/url/v1"
+        params = dict(ids=ids, level=level, encodeType='flac')
         return self.request("POST", path, params)
 
     # lyric http://music.163.com/api/song/lyric?os=osx&id= &lv=-1&kv=-1&tv=-1

@@ -95,6 +95,18 @@ msgctxt "#32015"
 msgid "Hi-Res"
 msgstr "Hi-Res"
 
+msgctxt "#32016"
+msgid "Spatial Audio"
+msgstr "高清环绕声"
+
+msgctxt "#32017"
+msgid "Surround Audio"
+msgstr "沉浸环绕声"
+
+msgctxt "#32018"
+msgid "Master"
+msgstr "超清母带"
+
 # 标清
 msgctxt "#32021"
 msgid "240"
