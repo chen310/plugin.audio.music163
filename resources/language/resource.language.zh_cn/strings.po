@@ -3,278 +3,272 @@ msgstr ""
 
 ################################
 
-msgctxt "#32001"
+msgctxt "#30001"
 msgid "Login Settings"
 msgstr "登录设置"
 
-msgctxt "#32002"
+msgctxt "#30002"
 msgid "Account Settings"
 msgstr "账号设置"
 
-msgctxt "#32006"
+msgctxt "#30003"
 msgid "Login"
 msgstr "账号密码登录"
 
-msgctxt "#32007"
+msgctxt "#30004"
 msgid "QR code login"
 msgstr "扫码登录"
 
-msgctxt "#32008"
+msgctxt "#30005"
 msgid "Logout"
 msgstr "退出登录"
 
-##
-
-msgctxt "#32102"
+msgctxt "#30006"
 msgid "Proxy Settings"
 msgstr "代理设置"
 
-msgctxt "#32103"
+msgctxt "#30007"
 msgid "Host"
 msgstr "服务器"
 
-msgctxt "#32104"
+msgctxt "#30008"
 msgid "Port"
 msgstr "端口"
 
-msgctxt "#32105"
+msgctxt "#30009"
 msgid "Enable proxy"
 msgstr "使用代理"
 
-################################
-
-msgctxt "#33001"
+msgctxt "#30010"
 msgid "Play Settings"
 msgstr "播放设置"
 
-msgctxt "#33002"
+msgctxt "#30011"
 msgid "Play Settings"
 msgstr "播放设置"
 
-msgctxt "#33003"
+msgctxt "#30012"
 msgid "Songs per page"
 msgstr "每页歌曲数"
 
-msgctxt "#33004"
+msgctxt "#30013"
 msgid "Show index of songs"
 msgstr "显示歌曲序号"
 
-msgctxt "#33005"
+msgctxt "#30014"
 msgid "Play MV first"
 msgstr "歌曲有MV时优先播放MV"
 
-msgctxt "#33006"
-msgid "Default audio quality"
+msgctxt "#30015"
+msgid "Audio quality"
 msgstr "默认音质"
 
-msgctxt "#33007"
-msgid "Default video resolution"
-msgstr "默认画质"
-
-msgctxt "#33008"
-msgid "Reverse radio"
-msgstr "播单（声音）逆序"
-
-msgctxt "#32011"
+msgctxt "#30016"
 msgid "Standard"
 msgstr "标准"
 
-msgctxt "#32012"
+msgctxt "#30017"
 msgid "High"
 msgstr "较高"
 
-msgctxt "#32013"
+msgctxt "#30018"
 msgid "Very high"
 msgstr "极高"
 
-msgctxt "#32014"
+msgctxt "#30019"
 msgid "Lossless"
 msgstr "无损"
 
-msgctxt "#32015"
+msgctxt "#30020"
 msgid "Hi-Res"
 msgstr "Hi-Res"
 
-msgctxt "#32016"
+msgctxt "#30021"
 msgid "Spatial Audio"
 msgstr "高清环绕声"
 
-msgctxt "#32017"
+msgctxt "#30022"
 msgid "Surround Audio"
 msgstr "沉浸环绕声"
 
-msgctxt "#32018"
+msgctxt "#30023"
 msgid "Master"
 msgstr "超清母带"
 
+msgctxt "#30024"
+msgid "Video resolution"
+msgstr "默认画质"
+
 # 标清
-msgctxt "#32021"
+msgctxt "#30025"
 msgid "240"
 msgstr "240"
 
 # 高清
-msgctxt "#32022"
+msgctxt "#30026"
 msgid "480"
 msgstr "480"
 
 # 超清
-msgctxt "#32023"
+msgctxt "#30027"
 msgid "720"
 msgstr "720"
 
 # 1080P
-msgctxt "#32024"
+msgctxt "#30028"
 msgid "1080"
 msgstr "1080"
 
-msgctxt "#33009"
-msgid "Automatically play the MV when the song cannot be played"
-msgstr "歌曲不能播放时自动播放MV(如有)"
-
-msgctxt "#33010"
-msgid "Hide unplayable songs"
-msgstr "隐藏不能播放的歌曲"
-
-msgctxt "#33011"
-msgid "Hide cover songs in search reaults"
-msgstr "隐藏搜索结果中的翻唱歌曲"
-
-msgctxt "#33012"
-msgid "Show album name below song name"
-msgstr "歌名下方显示专辑名"
-
-msgctxt "#33013"
-msgid "Upload music playback record to Netease Cloud Music"
-msgstr "上传音乐播放记录至网易云音乐"
-
-msgctxt "#33014"
-msgid "Delete thumbnails (thumbnails of other addon will also be deleted)"
-msgstr "删除缩略图（其他插件的缩略图也会被删除）"
-
-msgctxt "#33015"
+msgctxt "#30029"
 msgid "Song naming format"
 msgstr "歌曲命名格式"
 
-msgctxt "#32031"
+msgctxt "#30030"
 msgid "artist - song"
 msgstr "歌手 - 歌曲名"
 
-msgctxt "#32032"
+msgctxt "#30031"
 msgid "song - artist"
 msgstr "歌曲名 - 歌手"
 
-msgctxt "#32033"
+msgctxt "#30032"
 msgid "song"
 msgstr "歌曲名"
 
+msgctxt "#30033"
+msgid "Reverse radio"
+msgstr "播单（声音）逆序"
+
+msgctxt "#30034"
+msgid "Automatically play the MV when the song cannot be played"
+msgstr "歌曲不能播放时自动播放MV(如有)"
+
+msgctxt "#30035"
+msgid "Hide unplayable songs"
+msgstr "隐藏不能播放的歌曲"
+
+msgctxt "#30036"
+msgid "Hide cover songs in search reaults"
+msgstr "隐藏搜索结果中的翻唱歌曲"
+
+msgctxt "#30037"
+msgid "Show album name below song name"
+msgstr "歌名下方显示专辑名"
+
+msgctxt "#30038"
+msgid "Upload music playback record to Netease Cloud Music"
+msgstr "上传音乐播放记录至网易云音乐"
+
+msgctxt "#30039"
+msgid "Delete thumbnails (thumbnails of other addon will also be deleted)"
+msgstr "删除缩略图（其他插件的缩略图也会被删除）"
+
 ################################
 
-msgctxt "#34001"
+msgctxt "#30040"
 msgid "Function Settings"
 msgstr "功能设置"
 
-msgctxt "#34002"
+msgctxt "#30041"
 msgid "Function Switch"
 msgstr "功能开关"
 
-msgctxt "#34003"
+msgctxt "#30042"
 msgid "Ranking list"
 msgstr "排行榜"
 
-msgctxt "#34004"
+msgctxt "#30043"
 msgid "Top artist"
 msgstr "热门歌手"
 
-msgctxt "#34005"
+msgctxt "#30044"
 msgid "Daily recommend"
 msgstr "每日推荐"
 
-msgctxt "#34006"
+msgctxt "#30045"
 msgid "Personal FM"
 msgstr "私人FM"
 
-msgctxt "#34007"
+msgctxt "#30046"
 msgid "My playlist"
 msgstr "我的歌单"
 
-msgctxt "#34008"
+msgctxt "#30047"
 msgid "Recommend playlists"
 msgstr "推荐歌单"
 
-msgctxt "#34009"
+msgctxt "#30048"
 msgid "My sublist"
 msgstr "我的收藏"
 
-msgctxt "#34010"
+msgctxt "#30049"
 msgid "Search"
 msgstr "搜索"
 
-msgctxt "#34011"
+msgctxt "#30050"
 msgid "Colud disk"
 msgstr "我的云盘"
 
-msgctxt "#34012"
+msgctxt "#30051"
 msgid "New albums"
 msgstr "新碟上架"
 
-msgctxt "#34013"
+msgctxt "#30052"
 msgid "New songs"
 msgstr "新歌速递"
 
-msgctxt "#34014"
+msgctxt "#30053"
 msgid "Homepage"
 msgstr "个人主页"
 
-msgctxt "#34015"
+msgctxt "#30054"
 msgid "Top MV"
 msgstr "热门MV"
 
-msgctxt "#34016"
+msgctxt "#30055"
 msgid "Mlog"
 msgstr "Mlog"
 
-msgctxt "#34017"
+msgctxt "#30056"
 msgid "Vip timemachine"
 msgstr "黑胶时光机"
 
-################################
-
-msgctxt "#35001"
+msgctxt "#30057"
 msgid "Tag Settings"
 msgstr "标志设置"
 
-msgctxt "#35002"
+msgctxt "#30058"
 msgid "Tag Switch"
 msgstr "标志开关"
 
-msgctxt "#35003"
+msgctxt "#30059"
 msgid "MV tag"
 msgstr "MV标志"
 
-msgctxt "#35004"
+msgctxt "#30060"
 msgid "VIP tag"
 msgstr "VIP标志"
 
-msgctxt "#35005"
+msgctxt "#30061"
 msgid "Cloud disk tag"
 msgstr "云盘标志 ☁"
 
-msgctxt "#35006"
+msgctxt "#30062"
 msgid "Exclusive tag"
 msgstr "独家标志"
 
-msgctxt "#35007"
+msgctxt "#30063"
 msgid "SQ tag"
 msgstr "SQ标志"
 
-msgctxt "#35008"
+msgctxt "#30064"
 msgid "Pay tag"
 msgstr "付费标志"
 
-msgctxt "#35009"
+msgctxt "#30065"
 msgid "PreSell tag"
 msgstr "预售标志"
 
-msgctxt "#35010"
+msgctxt "#30066"
 msgid "Like tag"
 msgstr "喜欢标志 [COLOR red]♥[/COLOR]"
