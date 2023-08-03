@@ -928,8 +928,7 @@ def qrcode_login():
     if not result:
         return
     xbmc.executebuiltin('ShowPicture(%s)' % temp_path)
-    thread = threading.Thread(target=check_login_status, name='check', args=(key,))
-    thread.start()
+    check_login_status(key)
 
 
 # Mlog广场
