@@ -1513,6 +1513,7 @@ def get_playlists_items(playlists):
         else:
             creator_name = '网易云音乐'
             creator_id = 1
+        context_menu.append(('跳转到用户: ' + creator_name, 'Container.Update(%s)' % plugin.url_for('user', id=creator_id)))
         if 'createTime' in playlist and playlist['createTime'] is not None:
             plot_info += '创建时间: '+trans_time(playlist['createTime'])+'\n'
         if 'description' in playlist and playlist['description'] is not None:
