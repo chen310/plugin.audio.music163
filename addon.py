@@ -9,7 +9,7 @@ import os
 import xbmcvfs
 import qrcode
 from datetime import datetime
-import threading
+import json
 try:
     xbmc.translatePath = xbmcvfs.translatePath
 except AttributeError:
@@ -232,11 +232,13 @@ def get_songs(songs, privileges=[], picUrl=None, source=''):
             data['mv_id'] = song['mv_id']
 
         artist = ""
+        artists = []
         data['picUrl'] = None
         if 'ar' in song:
             if song['ar'] is not None:
                 artist = "/".join([a["name"]
                                   for a in song["ar"] if a["name"] is not None])
+                artists = [[a['name'], a['id']] for a in song["ar"] if a["name"] is not None]
                 if artist == "" and "pc" in song:
                     artist = "未知艺术家" if song["pc"]["ar"] is None else song["pc"]["ar"]
 
@@ -253,6 +255,7 @@ def get_songs(songs, privileges=[], picUrl=None, source=''):
                     artist = "未知艺术家"
 
         elif 'artists' in song:
+            artists = [[a['name'], a['id']] for a in song["artists"]]
             artist = "/".join([a["name"] for a in song["artists"]])
 
             if picUrl is not None:
@@ -263,11 +266,13 @@ def get_songs(songs, privileges=[], picUrl=None, source=''):
                 data['picUrl'] = song['artists'][0]['img1v1Url']
         else:
             artist = "未知艺术家"
+            artists = []
             # if 'simpleSong' in tempSong and 'ar' not in song and 'artist' in tempSong and tempSong['artist']!='':
             #     artist = tempSong['artist']
             # else:
             #     artist = "未知艺术家"
         data['artist'] = artist
+        data['artists'] = artists
 
         if "al" in song:
             if song["al"] is not None:
@@ -453,16 +458,20 @@ def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, sou
 
         if 'second_line' in play and play['second_line']:
             label += '\n' + play['second_line']
-
+        context_menu = []
+        if play['artists']:
+            context_menu.append(('跳转到歌手: ' + play['artist'], 'RunPlugin(%s)' % plugin.url_for('to_artist', artists=json.dumps(play['artists']))))
+        if play['album_name'] and play['album_id']:
+            context_menu.append(('跳转到专辑: ' + play['album_name'], 'Container.Update(%s)' % plugin.url_for('album', id=play['album_id'])))
         if mv_id > 0 and xbmcplugin.getSetting(int(sys.argv[1]), 'mvfirst') == 'true' and getmv:
-            context_menu = [
+            context_menu.extend([
                 ('播放歌曲', 'RunPlugin(%s)' % plugin.url_for('song_contextmenu', action='play_song', meida_type='song',
                  song_id=str(play['id']), mv_id=str(mv_id), sourceId=str(sourceId), dt=str(play['dt']//1000))),
                 ('收藏到歌单', 'RunPlugin(%s)' % plugin.url_for('song_contextmenu', action='sub_playlist', meida_type='song',
                  song_id=str(play['id']), mv_id=str(mv_id), sourceId=str(sourceId), dt=str(play['dt']//1000))),
                 ('收藏到视频歌单', 'RunPlugin(%s)' % plugin.url_for('song_contextmenu', action='sub_video_playlist', meida_type='song',
                  song_id=str(play['id']), mv_id=str(mv_id), sourceId=str(sourceId), dt=str(play['dt']//1000))),
-            ]
+            ])
             items.append({
                 'label': label,
                 'path': plugin.url_for('play', meida_type='mv', song_id=str(play['id']), mv_id=str(mv_id), sourceId=str(sourceId), dt=str(play['dt']//1000)),
@@ -478,11 +487,11 @@ def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, sou
                 'info_type': 'video',
             })
         else:
-            context_menu = [
+            context_menu.extend([
                 ('收藏到歌单', 'RunPlugin(%s)' % plugin.url_for('song_contextmenu', action='sub_playlist', meida_type='song',
                  song_id=str(play['id']), mv_id=str(mv_id), sourceId=str(sourceId), dt=str(play['dt']//1000))),
                 ('歌曲ID:'+str(play['id']), ''),
-            ]
+            ])
 
             if mv_id > 0:
                 context_menu.append(('收藏到视频歌单', 'RunPlugin(%s)' % plugin.url_for('song_contextmenu', action='sub_video_playlist',
@@ -532,6 +541,17 @@ def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, sou
                 })
     return items
 
+
+@plugin.route('/to_artist/<artists>/')
+def to_artist(artists):
+    artists = json.loads(artists)
+    if len(artists) == 1:
+        xbmc.executebuiltin('Container.Update(%s)' % plugin.url_for('artist', id=artists[0][1]))
+        return
+    sel = xbmcgui.Dialog().select('选择要跳转的歌手', [a[0] for a in artists])
+    if sel < 0:
+        return
+    xbmc.executebuiltin('Container.Update(%s)' % plugin.url_for('artist', id=artists[sel][1]))
 
 @plugin.route('/song_contextmenu/<action>/<meida_type>/<song_id>/<mv_id>/<sourceId>/<dt>/')
 def song_contextmenu(action, meida_type, song_id, mv_id, sourceId, dt):
@@ -1092,11 +1112,17 @@ def get_albums_items(albums):
         elif 'cover' in album:
             picUrl = album['cover']
 
+        artists = [[a['name'], a['id']] for a in album['artists']]
+        artists_str = '/'.join([a[0] for a in artists])
+        context_menu = [
+            ('跳转到歌手: ' + artists_str, 'RunPlugin(%s)' % plugin.url_for('to_artist', artists=json.dumps(artists)))
+        ]
         items.append({
-            'label': album['artists'][0]['name'] + ' - ' + name,
+            'label': artists_str + ' - ' + name,
             'path': plugin.url_for('album', id=album_id),
             'icon': picUrl,
             'thumbnail': picUrl,
+            'context_menu': context_menu,
             'info': {'plot': plot_info},
             'info_type': 'video',
         })
@@ -1229,6 +1255,7 @@ def dj_sublist(offset):
 def get_djlists_items(playlists):
     items = []
     for playlist in playlists:
+        context_menu = []
         plot_info = '[COLOR pink]' + playlist['name'] + \
             '[/COLOR]  共' + str(playlist['programCount']) + '个声音\n'
         if 'lastProgramCreateTime' in playlist and playlist['lastProgramCreateTime'] is not None:
@@ -1241,6 +1268,7 @@ def get_djlists_items(playlists):
             plot_info += '创建用户: ' + \
                 playlist['dj']['nickname'] + '  id: ' + \
                 str(playlist['dj']['userId']) + '\n'
+            context_menu.append(('跳转到用户: ' + playlist['dj']['nickname'], 'Container.Update(%s)' % plugin.url_for('user', id=playlist['dj']['userId'])))
         if 'createTime' in playlist and playlist['createTime'] is not None:
             plot_info += '创建时间: '+trans_time(playlist['createTime'])+'\n'
         if 'desc' in playlist and playlist['desc'] is not None:
@@ -1260,6 +1288,7 @@ def get_djlists_items(playlists):
             'path': plugin.url_for('djlist', id=playlist['id'], offset=0),
             'icon': img_url,
             'thumbnail': img_url,
+            'context_menu': context_menu,
             'info': {
                 'plot': plot_info
             },
@@ -1321,10 +1350,15 @@ def digitalAlbum_purchased():
 def get_mvs_items(mvs):
     items = []
     for mv in mvs:
+        context_menu = []
         if 'artists' in mv:
-            name = '&'.join([artist['name'] for artist in mv['artists']])
+            name = '/'.join([artist['name'] for artist in mv['artists']])
+            artists = [[a['name'], a['id']] for a in mv['artists']]
+            context_menu.append(('跳转到歌手: ' + name, 'RunPlugin(%s)' % plugin.url_for('to_artist', artists=json.dumps(artists))))
         elif 'artist' in mv:
             name = mv['artist']['name']
+            artists = [[mv['artist']['name'], mv['artist']['id']]]
+            context_menu.append(('跳转到歌手: ' + name, 'RunPlugin(%s)' % plugin.url_for('to_artist', artists=json.dumps(artists))))
         elif 'artistName' in mv:
             name = mv['artistName']
         else:
@@ -1344,6 +1378,7 @@ def get_mvs_items(mvs):
             'is_playable': True,
             'icon': cover,
             'thumbnail': cover,
+            'context_menu': context_menu,
             'info': {
                 'mediatype': 'video',
                 'title': mv['name'],
