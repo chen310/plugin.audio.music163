@@ -19,7 +19,7 @@
 		<setting id="number_of_songs_per_page" type="number" label="30012" default="1000"/>
 		<setting id="show_index" type="bool" label="30013" default="false"/>
 		<setting id="mvfirst" type="bool" label="30014" default="true"/>
-		<setting id="quality" type="select" label="30015" lvalues="30016|30017|30018|30019|30020|30021|30022|30023" />
+		<setting id="quality" type="select" label="30015" lvalues="30016|30017|30018|30019|30020|30021|30022|30023|30100" />
 		<setting id="resolution" type="select" label="30024" lvalues="30025|30026|30027|30028" />
 		<setting id="song_naming_format" type="select" label="30029" lvalues="30030|30031|30032" />
 		<setting id="reverse_radio" type="bool" label="30033" default="false" />

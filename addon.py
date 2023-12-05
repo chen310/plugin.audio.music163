@@ -157,6 +157,8 @@ elif quality == '6':
     level = 'sky'
 elif quality == '7':
     level = 'jymaster'
+elif quality == '8':
+    level = 'dolby'
 else:
     level = 'standard'
 
@@ -446,6 +448,8 @@ def get_songs_items(datas, privileges=[], picUrl=None, offset=0, getmv=True, sou
                         label += tag(' 沉浸声')
                     elif play['privilege']['playMaxBrLevel'] == 'jymaster':
                         label += tag(' 超清母带')
+                    elif play['privilege']['playMaxBrLevel'] == 'dolby':
+                        label += tag(' 杜比全景声')
                 elif play['privilege']['maxbr'] >= 999000:
                     label += tag(' SQ')
             # payed: 0 未付费 | 3 付费单曲 | 5 付费专辑

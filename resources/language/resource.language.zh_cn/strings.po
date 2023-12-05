@@ -95,6 +95,10 @@ msgctxt "#30023"
 msgid "Master"
 msgstr "超清母带"
 
+msgctxt "#30100"
+msgid "Dolby"
+msgstr "杜比全景声"
+
 msgctxt "#30024"
 msgid "Video resolution"
 msgstr "默认画质"

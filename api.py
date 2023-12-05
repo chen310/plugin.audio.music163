@@ -45,10 +45,6 @@ class NetEase(object):
         self.session = requests.Session()
         self.session.cookies = cookie_jar
 
-        if 'appver' not in self.session.cookies:
-            cookie = self.make_cookie('appver', '8.10.10')
-            self.session.cookies.set_cookie(cookie)
-
         for cookie in cookie_jar:
             if cookie.is_expired():
                 cookie_jar.clear()
@@ -106,7 +102,7 @@ class NetEase(object):
             rest={},
         )
 
-    def request(self, method, path, params={}, default={"code": -1}, custom_cookies={'os': 'android'}, return_json=True):
+    def request(self, method, path, params={}, default={"code": -1}, custom_cookies={'os': 'android', 'appver': '8.20.20'}):
         endpoint = "{}{}".format(BASE_URL, path)
         csrf_token = ""
         for cookie in self.session.cookies:
@@ -268,8 +264,12 @@ class NetEase(object):
 
     def songs_url_v1(self, ids, level):
         path = "/weapi/song/enhance/player/url/v1"
-        params = dict(ids=ids, level=level, encodeType='flac')
-        return self.request("POST", path, params)
+        if level == 'dolby':
+            params = dict(ids=ids, level='hires', effects='["dolby"]', encodeType='mp4')
+            return self.request("POST", path, params, custom_cookies={'os': 'pc', 'appver': '2.10.11.201538'})
+        else:
+            params = dict(ids=ids, level=level, encodeType='flac')
+            return self.request("POST", path, params)
 
     # lyric http://music.163.com/api/song/lyric?os=osx&id= &lv=-1&kv=-1&tv=-1
     def song_lyric(self, music_id):

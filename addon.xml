@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.audio.music163" name="music163" version="1.6.0" provider-name="chen310">
+<addon id="plugin.audio.music163" name="music163" version="1.7.0" provider-name="chen310">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="script.module.xbmcswift2" version="2.4.0"/>
