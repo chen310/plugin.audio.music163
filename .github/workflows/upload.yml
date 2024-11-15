@@ -35,7 +35,7 @@ jobs:
           shopt -s extglob
           mv !(plugin.audio.music163) plugin.audio.music163
       - name: Upload addon
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: plugin.audio.music163-${{ env.VERSION }}-python3
           path: ./
@@ -43,7 +43,7 @@ jobs:
         run: |
           sed -i "s/3\.0\.0/2\.7\.0/g" ./plugin.audio.music163/addon.xml
       - name: Upload addon
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: plugin.audio.music163-${{ env.VERSION }}-python2
           path: ./
