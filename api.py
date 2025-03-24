@@ -102,7 +102,7 @@ class NetEase(object):
             rest={},
         )
 
-    def request(self, method, path, params={}, default={"code": -1}, custom_cookies={'os': 'android', 'appver': '8.20.20'}):
+    def request(self, method, path, params={}, default={"code": -1}, custom_cookies={'os': 'android', 'appver': '9.2.70'}):
         endpoint = "{}{}".format(BASE_URL, path)
         csrf_token = ""
         for cookie in self.session.cookies:
